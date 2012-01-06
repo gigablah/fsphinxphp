@@ -3,7 +3,7 @@
 namespace FSphinx;
 
 /**
- * @brief		Interface for data sources that provide attribute data.
+ * @brief       Interface for data sources that provide attribute data.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */

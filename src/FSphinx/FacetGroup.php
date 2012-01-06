@@ -3,7 +3,7 @@
 namespace FSphinx;
 
 /**
- * @brief		A class for performing computation and caching operations for a set of Facets.
+ * @brief       A class for performing computation and caching operations for a set of Facets.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */

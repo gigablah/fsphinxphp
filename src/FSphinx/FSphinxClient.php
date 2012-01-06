@@ -1,14 +1,14 @@
 <?php
 /**
  * @mainpage
- * @brief		FSphinxPHP extends the Sphinx API to provide an easy way to perform faceted search.
+ * @brief       FSphinxPHP extends the Sphinx API to provide an easy way to perform faceted search.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
 namespace FSphinx;
 
 /**
- * @brief		A class that extends the Sphinx client to support faceted queries.
+ * @brief       A class that extends the Sphinx client to support faceted queries.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
@@ -200,11 +200,11 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 		
 		// stash current Sphinx settings
 		$this->SaveOptions ( array (
-			'_offset', '_limit', '_maxmatches', '_cutoff',				// modified by SetLimits
-			'_select',													// modified by SetSelect
-			'_groupby', '_groupfunc', '_groupsort', '_groupdistinct',	// modified by ResetGroupBy
-			'_mode',													// modified by SetMatchMode
-			'_sort', '_sortby',											// modified by SetSortMode
+			'_offset', '_limit', '_maxmatches', '_cutoff',              // modified by SetLimits
+			'_select',                                                  // modified by SetSelect
+			'_groupby', '_groupfunc', '_groupsort', '_groupdistinct',   // modified by ResetGroupBy
+			'_mode',                                                    // modified by SetMatchMode
+			'_sort', '_sortby',                                         // modified by SetSortMode
 		) );
 		$arrayresult = $this->_arrayresult;
 		

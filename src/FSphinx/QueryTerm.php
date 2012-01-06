@@ -3,7 +3,7 @@
 namespace FSphinx;
 
 /**
- * @brief		A class that represents a single query term for a Sphinx query.
+ * @brief       A class that represents a single query term for a Sphinx query.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
@@ -109,8 +109,8 @@ class QueryTerm
 	}
 	
 	/**
-	 * Comparison function for query terms. Field names are compared first, then field
-	 * terms are compared case insensitively.
+	 * Comparison function for query terms. Field names are compared first,
+	 * then field terms are compared case insensitively.
 	 * 
 	 * @param QueryTerm $a Query term A.
 	 * @param QueryTerm $b Query term B.

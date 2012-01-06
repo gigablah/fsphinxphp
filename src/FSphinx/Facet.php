@@ -3,8 +3,8 @@
 namespace FSphinx;
 
 /**
- * @brief		A class for adding facet computation to Sphinx.
- * 				Can be defined individually or as part of a FacetGroup.
+ * @brief       A class for adding facet computation to Sphinx.
+ *              Can be defined individually or as part of a FacetGroup.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
@@ -430,10 +430,10 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 		
 		// stash current Sphinx settings
 		$sphinx->SaveOptions ( array (
-			'_offset', '_limit', '_maxmatches', '_cutoff',			  // modified by SetLimits
-			'_select',												  // modified by SetSelect
+			'_offset', '_limit', '_maxmatches', '_cutoff',            // modified by SetLimits
+			'_select',                                                // modified by SetSelect
 			'_groupby', '_groupfunc', '_groupsort', '_groupdistinct', // modified by SetGroupBy
-			'_sort', '_sortby',										  // modified by SetSortMode
+			'_sort', '_sortby',                                       // modified by SetSortMode
 		) );
 		
 		$sphinx->SetLimits ( 0, $max_num_values, $this->_max_matches, $this->_cutoff );

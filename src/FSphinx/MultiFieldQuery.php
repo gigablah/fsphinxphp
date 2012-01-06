@@ -3,7 +3,7 @@
 namespace FSphinx;
 
 /**
- * @brief		A class that provides multi-field query object functionality for Sphinx.
+ * @brief       A class that provides multi-field query object functionality for Sphinx.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */

@@ -3,7 +3,7 @@
 namespace FSphinx;
 
 /**
- * @brief		A class for storing computed Facet values. Requires APC.
+ * @brief       A class for storing computed Facet values. Requires APC.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */

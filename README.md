@@ -1,4 +1,4 @@
-FSphinxPHP is a PHP port of the [fSphinx] [1] Python library, which extends the Sphinx API to easily perform faceted queries.
+FSphinx is a PHP port of the [fSphinx] [1] Python library, which extends the Sphinx API to easily perform faceted queries.
 
 The README, tutorial and demo site are still in progress, but in the meantime you can refer to the [documentation] [2].
 
