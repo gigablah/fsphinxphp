@@ -4,6 +4,7 @@ var searchData=
   ['facetgroup',['FacetGroup',['../class_f_sphinx_1_1_facet_group.html',1,'FSphinx']]],
   ['facetgroupcache',['FacetGroupCache',['../class_f_sphinx_1_1_facet_group_cache.html',1,'FSphinx']]],
   ['fetchterms',['FetchTerms',['../interface_f_sphinx_1_1_data_fetch_interface.html#a0c6f8120086a56e98199d992c0fc147c',1,'FSphinx::DataFetchInterface\FetchTerms()'],['../class_f_sphinx_1_1_facet.html#a0c6f8120086a56e98199d992c0fc147c',1,'FSphinx::Facet\FetchTerms()'],['../class_f_sphinx_1_1_f_sphinx_client.html#a0c6f8120086a56e98199d992c0fc147c',1,'FSphinx::FSphinxClient\FetchTerms()']]],
+  ['fromconfig',['FromConfig',['../class_f_sphinx_1_1_f_sphinx_client.html#a7ab23c6cb84cf74ed074cc643dca100f',1,'FSphinx::FSphinxClient']]],
   ['frommatchobject',['FromMatchObject',['../class_f_sphinx_1_1_query_term.html#adf0aeb80475a94ffce1c09247a0d6114',1,'FSphinx::QueryTerm']]],
   ['fromstring',['FromString',['../class_f_sphinx_1_1_query_term.html#a0618bd95d4f6ebd81c5d71b04b075a9f',1,'FSphinx::QueryTerm']]],
   ['fsphinxclient',['FSphinxClient',['../class_f_sphinx_1_1_f_sphinx_client.html',1,'FSphinx']]]

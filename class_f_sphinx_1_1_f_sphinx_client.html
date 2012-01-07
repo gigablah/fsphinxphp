@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>FSphinxPHP: FSphinxClient Class Reference</title>
+<title>FSphinx PHP: FSphinxClient Class Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -27,8 +27,8 @@
   
   
   <td style="padding-left: 0.5em;">
-   <div id="projectname">FSphinxPHP
-   &#160;<span id="projectnumber">1.0</span>
+   <div id="projectname">FSphinx PHP
+   &#160;<span id="projectnumber">1.0.1</span>
    </div>
    
   </td>
@@ -98,6 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
@@ -130,6 +131,9 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a51d7f296296ad825bc58dc334b1251ec">SaveOptions</a> (array $options)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#aa2e4703680bd1db02d2e26ce43406256">LoadOptions</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a0c6f8120086a56e98199d992c0fc147c">FetchTerms</a> (array $matches, array $options,\Closure $getter)</td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a7ab23c6cb84cf74ed074cc643dca100f">FromConfig</a> ($file)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_sphinx_1_1_facet_group.html">FacetGroup</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ae5f5866bce2fc7e57126919f38fe9075">$facets</a></td></tr>
@@ -304,6 +308,31 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 <dl class="return"><dt><b>Returns:</b></dt><dd>array ID-term pairs obtained from a Sphinx query. </dd></dl>
 
 <p>Implements <a class="el" href="interface_f_sphinx_1_1_data_fetch_interface.html#a0c6f8120086a56e98199d992c0fc147c">DataFetchInterface</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7ab23c6cb84cf74ed074cc643dca100f"></a><!-- doxytag: member="FSphinx::FSphinxClient::FromConfig" ref="a7ab23c6cb84cf74ed074cc643dca100f" args="($file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a7ab23c6cb84cf74ed074cc643dca100f">FromConfig</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Creates an <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html" title="A class that extends the Sphinx client to support faceted queries.">FSphinxClient</a> instance from an initialization file.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$file</td><td>Path to init file (absolute or relative to include_path). The file must be a PHP script that returns an <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html" title="A class that extends the Sphinx client to support faceted queries.">FSphinxClient</a> object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>FSphinxClient|null Created FSphinx client, or null if unsuccessful. </dd></dl>
 
 </div>
 </div>
@@ -552,7 +581,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 2 2012 14:08:59 for FSphinxPHP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 7 2012 13:01:39 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

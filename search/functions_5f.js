@@ -4,8 +4,9 @@ var searchData=
   ['_5f_5ftostring',['__toString',['../class_f_sphinx_1_1_facet.html#a7516ca30af0db3cdbf9a7739b48ce91d',1,'FSphinx::Facet\__toString()'],['../class_f_sphinx_1_1_facet_group.html#a7516ca30af0db3cdbf9a7739b48ce91d',1,'FSphinx::FacetGroup\__toString()'],['../class_f_sphinx_1_1_multi_field_query.html#a7516ca30af0db3cdbf9a7739b48ce91d',1,'FSphinx::MultiFieldQuery\__toString()'],['../class_f_sphinx_1_1_query_term.html#a7516ca30af0db3cdbf9a7739b48ce91d',1,'FSphinx::QueryTerm\__toString()']]],
   ['_5faddqueryterm',['_AddQueryTerm',['../class_f_sphinx_1_1_multi_field_query.html#a97ebdd0af43fa5f6846ad68dd27c84f0',1,'FSphinx::MultiFieldQuery']]],
   ['_5fcomputecache',['_ComputeCache',['../class_f_sphinx_1_1_facet_group.html#a8b05faf2e211daf3ff17465ca48bb18a',1,'FSphinx::FacetGroup']]],
-  ['_5fordervalues',['_OrderValues',['../class_f_sphinx_1_1_facet.html#a8587281032d82507da61dd8d7398c394',1,'FSphinx::Facet']]],
+  ['_5fordervalues',['_OrderValues',['../class_f_sphinx_1_1_facet.html#a8587281032d82507da61dd8d7398c394',1,'FSphinx::Facet\_OrderValues()'],['../class_f_sphinx_1_1_facet_group.html#a8587281032d82507da61dd8d7398c394',1,'FSphinx::FacetGroup\_OrderValues()']]],
   ['_5fprepare',['_Prepare',['../class_f_sphinx_1_1_facet.html#a3d1a395b91e1b4eecca8edf7833f8915',1,'FSphinx::Facet\_Prepare()'],['../class_f_sphinx_1_1_facet_group.html#a91a1e091c683ad3044f976264955a9b1',1,'FSphinx::FacetGroup\_Prepare()']]],
+  ['_5freset',['_Reset',['../class_f_sphinx_1_1_facet.html#ad2cd9f8ee7ba67146353bc5991b782f7',1,'FSphinx::Facet\_Reset()'],['../class_f_sphinx_1_1_facet_group.html#ad2cd9f8ee7ba67146353bc5991b782f7',1,'FSphinx::FacetGroup\_Reset()']]],
   ['_5frunqueries',['_RunQueries',['../class_f_sphinx_1_1_facet_group.html#a5a947f538f949e6843286477c159aabf',1,'FSphinx::FacetGroup']]],
-  ['_5fsetvalues',['_SetValues',['../class_f_sphinx_1_1_facet.html#a349bec3af736b54196b5c636d86620bc',1,'FSphinx::Facet\_SetValues()'],['../class_f_sphinx_1_1_facet_group.html#a80db276915fc6c70aa4643505026c398',1,'FSphinx::FacetGroup\_SetValues()']]]
+  ['_5fsetvalues',['_SetValues',['../class_f_sphinx_1_1_facet.html#a7726a0715266615ca43bffb964b33c14',1,'FSphinx::Facet\_SetValues()'],['../class_f_sphinx_1_1_facet_group.html#a7726a0715266615ca43bffb964b33c14',1,'FSphinx::FacetGroup\_SetValues()']]]
 ];

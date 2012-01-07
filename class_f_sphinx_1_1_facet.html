@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>FSphinxPHP: Facet Class Reference</title>
+<title>FSphinx PHP: Facet Class Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -27,8 +27,8 @@
   
   
   <td style="padding-left: 0.5em;">
-   <div id="projectname">FSphinxPHP
-   &#160;<span id="projectnumber">1.0</span>
+   <div id="projectname">FSphinx PHP
+   &#160;<span id="projectnumber">1.0.1</span>
    </div>
    
   </td>
@@ -134,7 +134,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#a66134a69aecbe07f44be7e22cfd6685d">SetDefaultIndex</a> ($index)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#ae4e80c16f7a1d0d37610bd976e708a2f">Compute</a> ($query)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#a3d1a395b91e1b4eecca8edf7833f8915">_Prepare</a> ($query, <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html">FSphinxClient</a> $sphinx)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#a349bec3af736b54196b5c636d86620bc">_SetValues</a> (<a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a> $query, array $results, $datafetch=null)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#ad2cd9f8ee7ba67146353bc5991b782f7">_Reset</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#a7726a0715266615ca43bffb964b33c14">_SetValues</a> (<a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a> $query, array $results, <a class="el" href="interface_f_sphinx_1_1_data_fetch_interface.html">DataFetchInterface</a> $datafetch=null)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#a8587281032d82507da61dd8d7398c394">_OrderValues</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#a288331d34c145e8ec112a137f5f0d20c">SetResults</a> (array $results)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet.html#a6e1a1b42f94c7a7bce1e9c43e2f35726">GetResults</a> ()</td></tr>
@@ -301,12 +302,29 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 </div>
 </div>
-<a class="anchor" id="a349bec3af736b54196b5c636d86620bc"></a><!-- doxytag: member="FSphinx::Facet::_SetValues" ref="a349bec3af736b54196b5c636d86620bc" args="(MultiFieldQuery $query, array $results, $datafetch=null)" -->
+<a class="anchor" id="ad2cd9f8ee7ba67146353bc5991b782f7"></a><!-- doxytag: member="FSphinx::Facet::_Reset" ref="ad2cd9f8ee7ba67146353bc5991b782f7" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_f_sphinx_1_1_facet.html#a349bec3af736b54196b5c636d86620bc">_SetValues</a> </td>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_facet.html#ad2cd9f8ee7ba67146353bc5991b782f7">_Reset</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Used to reset the <a class="el" href="class_f_sphinx_1_1_facet.html" title="A class for adding facet computation to Sphinx. Can be defined individually or as part of a FacetGrou...">Facet</a> values. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7726a0715266615ca43bffb964b33c14"></a><!-- doxytag: member="FSphinx::Facet::_SetValues" ref="a7726a0715266615ca43bffb964b33c14" args="(MultiFieldQuery $query, array $results, DataFetchInterface $datafetch=null)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_facet.html#a7726a0715266615ca43bffb964b33c14">_SetValues</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a> $&#160;</td>
           <td class="paramname"><em>query</em>, </td>
@@ -320,7 +338,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">$&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_f_sphinx_1_1_data_fetch_interface.html">DataFetchInterface</a> $&#160;</td>
           <td class="paramname"><em>datafetch</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
@@ -1283,7 +1301,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 2 2012 14:08:59 for FSphinxPHP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 7 2012 13:01:39 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
