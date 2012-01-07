@@ -1,0 +1,6 @@
+## 2012-01-07 v1.0.1 ##
+
+* Skip Facet computation if the main Sphinx query returns no results
+* Always reset Facet values upon new Sphinx query
+* Added FSphinxClient::FromConfig() to instantiate an FSphinx client from a config file
+* Added tests for FacetGroupCache

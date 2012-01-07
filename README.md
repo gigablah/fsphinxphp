@@ -5,4 +5,4 @@ The README, tutorial and demo site are still in progress, but in the meantime yo
 For questions and suggestions, please email Chris Heng (hengkuanyen at gmail dot com).
 
 [1]: http://github.com/alexksikes/fSphinx
-[2]: http://fsphinx.kuanyen.net
+[2]: http://gigablah.github.com/fsphinxphp/

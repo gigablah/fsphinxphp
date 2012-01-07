@@ -118,4 +118,147 @@ class IntegrationTest extends PHPUnit_Framework_TestCase
 			'Al Pacino', 'John Qualen', 'Morgan Freeman', 'Robert De Niro', 'Robert Duvall'
 		), $ids[4]);
 	}
+	
+	public function testRefineActor()
+	{
+		$results = $this->cl->Query('drama (@actor "Morgan Freeman")');
+		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
+		
+		$ids = array();
+		foreach ($results['matches'] as $id => $result) {
+			$ids[] = $id;
+		}
+		$this->assertEquals(array(
+			111161, 468569, 114369, 405159, 105695, 97441
+		), $ids);
+
+		$ids = array();
+		foreach ($this->cl->facets as $index => $facet)
+		{
+			$ids[$index] = array();
+			foreach ($facet as $match)
+			{
+				$ids[$index][] = $match['@term'];
+			}
+		}
+		
+		$this->assertEquals(array(
+			1992, 1994, 1995, 2004, 2008
+		), $ids[0]);
+		$this->assertEquals(array(
+			'Christopher Nolan', 'Clint Eastwood', 'David Fincher', 'Edward Zwick', 'Frank Darabont'
+		), $ids[3]);
+		$this->assertEquals(array(
+			'Bob Gunton', 'Clancy Brown', 'Clint Eastwood', 'Mark Rolston', 'Morgan Freeman', 'Tim Robbins'
+		), $ids[4]);
+	}
+	
+	public function testRefineDirector()
+	{
+		$results = $this->cl->Query('drama (@actor "Morgan Freeman") (@director "Clint Eastwood")');
+		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
+		
+		$ids = array();
+		foreach ($results['matches'] as $id => $result) {
+			$ids[] = $id;
+		}
+		$this->assertEquals(array(
+			405159, 105695
+		), $ids);
+
+		$ids = array();
+		foreach ($this->cl->facets as $index => $facet)
+		{
+			$ids[$index] = array();
+			foreach ($facet as $match)
+			{
+				$ids[$index][] = $match['@term'];
+			}
+		}
+		
+		$this->assertEquals(array(
+			1992, 2004
+		), $ids[0]);
+		$this->assertEquals(array(
+			'Clint Eastwood'
+		), $ids[3]);
+		$this->assertEquals(array(
+			'Clint Eastwood', 'David Mucci', 'Jaimz Woolvett', 'Josie Smith', 'Liisa Repo-Martell', 'Morgan Freeman'
+		), $ids[4]);
+	}
+	
+	public function testProgressiveRefine()
+	{
+		$results = $this->cl->Query('drama');
+		$results = $this->cl->Query('drama (@actor "Morgan Freeman")');
+		$results = $this->cl->Query('drama (@actor "Morgan Freeman") (@director "Clint Eastwood")');
+		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
+		
+		$ids = array();
+		foreach ($results['matches'] as $id => $result) {
+			$ids[] = $id;
+		}
+		$this->assertEquals(array(
+			405159, 105695
+		), $ids);
+
+		$ids = array();
+		foreach ($this->cl->facets as $index => $facet)
+		{
+			$ids[$index] = array();
+			foreach ($facet as $match)
+			{
+				$ids[$index][] = $match['@term'];
+			}
+		}
+		
+		$this->assertEquals(array(
+			1992, 2004
+		), $ids[0]);
+		$this->assertEquals(array(
+			'Clint Eastwood'
+		), $ids[3]);
+		$this->assertEquals(array(
+			'Clint Eastwood', 'David Mucci', 'Jaimz Woolvett', 'Josie Smith', 'Liisa Repo-Martell', 'Morgan Freeman'
+		), $ids[4]);
+		
+		// this should return no results
+		$results = $this->cl->Query('drama (@actor "Morgan Freeman") (@director "Clint Eastwood") (@year 1993)');
+		$this->assertEquals(0, $results['total_found']);
+		
+		foreach ($this->cl->facets as $index => $facet)
+		{
+			$this->assertEquals(0, count($facet));
+		}
+		
+		// facets should not be computed if there's no results returned for the main query
+		$this->assertEquals(0, $this->cl->facets->GetTime());
+	}
+	
+	public function testConfigFile()
+	{
+		$sphinx = FSphinxClient::FromConfig(dirname(dirname(dirname(__FILE__))) . '/src/config.sample.php');
+		$this->assertType('\FSphinx\FSphinxClient', $sphinx);
+		
+		$results1 = $this->cl->Query('drama (@actor "Morgan Freeman") (@director "Clint Eastwood")');
+		$results2 = $sphinx->Query('drama (@actor "Morgan Freeman") (@director "Clint Eastwood")');
+		$ids1 = $ids2 = array();
+		foreach ($this->cl->facets as $index => $facet)
+		{
+			$ids1[$index] = array();
+			foreach ($facet as $match)
+			{
+				$ids1[$index][] = $match['@term'];
+			}
+		}
+		foreach ($sphinx->facets as $index => $facet)
+		{
+			$ids2[$index] = array();
+			foreach ($facet as $match)
+			{
+				$ids2[$index][] = $match['@term'];
+			}
+		}
+		$this->assertEquals($ids1, $ids2);
+	}
 }

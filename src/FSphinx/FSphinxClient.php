@@ -1,7 +1,7 @@
 <?php
 /**
  * @mainpage
- * @brief       FSphinxPHP extends the Sphinx API to provide an easy way to perform faceted search.
+ * @brief       FSphinx PHP extends the Sphinx API to provide an easy way to perform faceted search.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
@@ -113,8 +113,13 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 		$results = parent::Query ( $query->ToSphinx (), $index ?: $this->_default_index, $comment );
 		
 		// compute all facets if there are results found
-		if ( $this->facets && is_array ( $results ) && $results['total_found'] )
-			$this->facets->Compute ( $query );
+		if ( $this->facets )
+		{
+			if ( is_array ( $results ) && $results['total_found'] )
+				$this->facets->Compute ( $query );
+			else
+				$this->facets->_Reset ();
+		}
 		
 		return $results;
 	}
@@ -175,6 +180,24 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 	{
 		foreach ( $this->_options as $option => $value )
 			$this->$option = $value;
+	}
+	
+	/**
+	 * Creates an FSphinxClient instance from an initialization file.
+	 * 
+	 * @param string $file Path to init file (absolute or relative to include_path).
+	 *                     The file must be a PHP script that returns an FSphinxClient object.
+	 * @return FSphinxClient|null Created FSphinx client, or null if unsuccessful.
+	 */
+	public static function FromConfig ( $file )
+	{
+		if ( @file_exists ( $file ) )
+		{
+			$sphinx = include ( $file );
+			if ( is_object ( $sphinx ) && $sphinx instanceof FSphinxClient )
+				return $sphinx;
+		}
+		return null;
 	}
 	
 	/**
