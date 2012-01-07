@@ -19,6 +19,7 @@
 	<testsuites>
 		<testsuite name="FSphinxPHP Test Suite">
 			<file>suite/QueryTest.php</file>
+			<file>suite/CacheTest.php</file>
 			<file>suite/SphinxTest.php</file>
 			<file>suite/FacetTest.php</file>
 			<file>suite/IntegrationTest.php</file>
