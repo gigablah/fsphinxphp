@@ -59,7 +59,7 @@ class FacetGroupCache
 		
 		foreach ( $facets as $facet )
 			$results[] = $facet->GetResults ();
-			
+		
 		$results = serialize ( $results );
 		
 		if ( $replace )

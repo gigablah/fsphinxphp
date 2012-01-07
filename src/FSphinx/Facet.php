@@ -401,12 +401,12 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 		$this->_sphinx->SetArrayResult ( $arrayresult );
 		
 		if ( is_array ( $results ) )
-			$results = $results[0];
-		
-		if ( isset ( $results['total_found'] ) && $results['total_found'] )
 		{
+			$results = $results[0];
+			$this->_Reset ();
 			$this->_SetValues ( $query, $results, $this->_datafetch );
 			$this->_OrderValues ();
+			
 			return $results;
 		}
 		return null;
@@ -447,13 +447,9 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 	}
 	
 	/**
-	 * Used internally to set the computed Facet results, metadata and terms.
-	 * 
-	 * @param MultiFieldQuery $query Sphinx query as a MultiFieldQuery object.
-	 * @param array $results Computed results from Sphinx.
-	 * @param DataFetchInterface $datafetch Data source object.
+	 * Used to reset the Facet values.
 	 */
-	public function _SetValues ( MultiFieldQuery $query, array $results, $datafetch=null )
+	public function _Reset ()
 	{
 		// initialize results array
 		$this->_results = array (
@@ -463,12 +459,25 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 			'warning' => '',
 			'matches' => array ()
 		);
-		
+	}
+	
+	/**
+	 * Used internally to set the computed Facet results, metadata and terms.
+	 * 
+	 * @param MultiFieldQuery $query Sphinx query as a MultiFieldQuery object.
+	 * @param array $results Computed results from Sphinx.
+	 * @param DataFetchInterface $datafetch Data source object.
+	 */
+	public function _SetValues ( MultiFieldQuery $query, array $results, DataFetchInterface $datafetch=null )
+	{
 		foreach ( array_keys ( $this->_results ) as $key )
 		{
-			if ( $key != 'matches' )
+			if ( $key != 'matches' && array_key_exists ( $key, $results ) )
 				$this->_results[$key] = $results[$key];
 		}
+		
+		if ( !isset ( $results['matches'] ) )
+			return;
 		
 		$terms = array ();
 		
@@ -517,6 +526,9 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 	 */
 	public function _OrderValues ()
 	{
+		if ( !count ( $this->_results['matches'] ) )
+			return;
+		
 		$func = $this->_order_by;
 		$desc = $this->_order_by_desc;
 		usort ( $this->_results['matches'], function ( $a, $b ) use ( $func, $desc ) {

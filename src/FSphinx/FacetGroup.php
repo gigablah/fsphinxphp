@@ -132,7 +132,7 @@ class FacetGroup implements \Iterator, \Countable
 	 * 
 	 * @param boolean $preloading Whether to preload Facet values.
 	 */
-	public function SetPreloading ( $preloading )
+	public function SetPreloading ( $preloading=true )
 	{
 		$this->_preloading = $preloading ? true : false;
 	}
@@ -142,13 +142,14 @@ class FacetGroup implements \Iterator, \Countable
 	 * 
 	 * @param boolean $caching Whether to cache computed Facet values.
 	 */
-	public function SetCaching ( $caching )
+	public function SetCaching ( $caching=true )
 	{
 		$this->_caching = $caching ? true : false;
 	}
 	
 	/**
 	 * Compute the values for all Facets in this collection for a given Sphinx query.
+	 * Note that Facet::Compute() is not called directly.
 	 * 
 	 * @param MultiFieldQuery|string $query Sphinx query to be computed.
 	 * @param boolean $caching Whether to enable caching.
@@ -169,13 +170,92 @@ class FacetGroup implements \Iterator, \Countable
 		if ( !$caching && !$preloading )
 		{
 			$query = $this->_Prepare ( $query );
-			$results = $this->_RunQueries ();
-			$this->_SetValues ( $query, $results, $this->_datafetch );
+			if ( $results = $this->_RunQueries () )
+			{
+				$this->_Reset ();
+				$this->_SetValues ( $query, $results, $this->_datafetch );
+				$this->_OrderValues ();
+			}
 		}
 		else
 			$results = $this->_ComputeCache ( $query, $caching );
 			
 		return $results;
+	}
+	
+	/**
+	 * Used internally to prepare all Facets for computation against a given Sphinx query.
+	 * 
+	 * @param MultiFieldQuery|string $query Sphinx query to be computed.
+	 * @return MultiFieldQuery Processed Sphinx query as a MultiFieldQuery object.
+	 * @see Facet::_Prepare()
+	 */
+	protected function _Prepare ( $query )
+	{
+		if ( !( $query instanceof MultiFieldQuery ) )
+			$query = $this->_sphinx->Parse ( $query );
+		
+		foreach ( $this->_facets as $facet )
+			$facet->_Prepare ( $query, $this->_sphinx );
+		
+		return $query;
+	}
+	
+	/**
+	 * Used internally to run all Facet computations as a single batch query.
+	 */
+	protected function _RunQueries ()
+	{
+		$arrayresult = $this->_sphinx->_arrayresult;
+		$this->_sphinx->SetArrayResult ( true );
+		$results = $this->_sphinx->RunQueries ();
+		$this->_sphinx->SetArrayResult ( $arrayresult );
+		return $results;
+	}
+	
+	/**
+	 * Used to reset values for all Facets in this collection.
+	 */
+	public function _Reset ()
+	{
+		foreach ( $this->_facets as $index => $facet )
+			$facet->_Reset ();
+		
+		$this->_time = 0;
+	}
+	
+	/**
+	 * Used internally to set the computed results, metadata and terms for all Facets.
+	 * 
+	 * @param MultiFieldQuery $query Sphinx query as a MultiFieldQuery object.
+	 * @param array $results Computed results from Sphinx.
+	 * @param DataFetchInterface $datafetch Data source object.
+	 * @see Facet::_SetValues()
+	 * @see Facet::_OrderValues()
+	 */
+	protected function _SetValues ( MultiFieldQuery $query, array $results, DataFetchInterface $datafetch=null )
+	{
+		foreach ( $this->_facets as $index => $facet )
+		{
+			$result = $results[$index];
+			
+			if ( is_array ( $result ) )
+				$facet->_SetValues ( $query, $result, $datafetch );
+			
+			$this->_time += $facet->GetTime ();
+		}
+	}
+	
+	/**
+	 * Perform custom sorting of Sphinx results for each Facet.
+	 */
+	protected function _OrderValues ()
+	{
+		foreach ( $this->_facets as $index => $facet )
+		{
+			if ( count ( $facet ) )
+				$facet->_OrderValues ();
+		}
 	}
 	
 	/**
@@ -232,59 +312,6 @@ class FacetGroup implements \Iterator, \Countable
 			$this->_cache->SetFacets ( $query, $this->_facets );
 			
 		return $results;
-	}
-	
-	/**
-	 * Used internally to prepare all Facets for computation against a given Sphinx query.
-	 * 
-	 * @param MultiFieldQuery|string $query Sphinx query to be computed.
-	 * @return MultiFieldQuery Processed Sphinx query as a MultiFieldQuery object.
-	 * @see Facet::_Prepare()
-	 */
-	protected function _Prepare ( $query )
-	{
-		if ( !( $query instanceof MultiFieldQuery ) )
-			$query = $this->_sphinx->Parse ( $query );
-		
-		foreach ( $this->_facets as $facet )
-			$facet->_Prepare ( $query, $this->_sphinx );
-		
-		return $query;
-	}
-	
-	/**
-	 * Used internally to run all Facet computations as a single batch query.
-	 */
-	protected function _RunQueries ()
-	{
-		$arrayresult = $this->_sphinx->_arrayresult;
-		$this->_sphinx->SetArrayResult ( true );
-		$results = $this->_sphinx->RunQueries ();
-		$this->_sphinx->SetArrayResult ( $arrayresult );
-		return $results;
-	}
-	
-	/**
-	 * Used internally to set the computed results, metadata and terms for all Facets.
-	 * 
-	 * @param MultiFieldQuery $query Sphinx query as a MultiFieldQuery object.
-	 * @param array $results Computed results from Sphinx.
-	 * @param DataFetchInterface $datafetch Data source object.
-	 * @see Facet::_SetValues()
-	 * @see Facet::_OrderValues()
-	 */
-	protected function _SetValues ( $query, $results, $datafetch=null )
-	{
-		foreach ( $this->_facets as $index => $facet )
-		{
-			$result = $results[$index];
-			if ( isset ( $result['total_found'] ) && $result['total_found'] )
-			{
-				$facet->_SetValues ( $query, $result, $datafetch );
-				$facet->_OrderValues ();
-			}
-			$this->_time += $facet->GetTime ();
-		}
 	}
 	
 	/**
