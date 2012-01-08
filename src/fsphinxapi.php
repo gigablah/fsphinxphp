@@ -1,10 +1,17 @@
 <?php
+/** Simple autoloader */
 
-// can be converted to use autoloader
-require_once ( 'FSphinx/DataFetchInterface.php' );
-require_once ( 'FSphinx/FSphinxClient.php' );
-require_once ( 'FSphinx/MultiFieldQuery.php' );
-require_once ( 'FSphinx/QueryTerm.php' );
-require_once ( 'FSphinx/Facet.php' );
-require_once ( 'FSphinx/FacetGroup.php' );
-require_once ( 'FSphinx/FacetGroupCache.php' );
+namespace FSphinx;
+
+function Autoload ( $class )
+{
+	$file = dirname(__FILE__) . DIRECTORY_SEPARATOR . str_replace ( '\\', DIRECTORY_SEPARATOR, $class ) . '.php';
+	if ( @file_exists ( $file ) )
+	{
+		require ( $file );
+		return true;
+	}
+	return false;
+}
+
+spl_autoload_register('\FSphinx\Autoload');
