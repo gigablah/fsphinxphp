@@ -7,14 +7,13 @@ namespace FSphinx;
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
-class MultiFieldQuery implements \Iterator, \Countable
+class MultiFieldQuery implements \IteratorAggregate, \Countable
 {
 	/** Whether to use full scan mode for empty queries. */
-	const ALLOW_EMPTY = false;
+	const ALLOW_EMPTY = true;
 	
 	/** Regex for extracting query terms. */
-	const QUERY_PATTERN = 
-		'#@(?P<status>[+-]?)(?P<field>\w+|\*)\s+(?P<term>[^@()]+)|(?P<all>[^@()]+)#iux';
+	const QUERY_PATTERN = '#@(?P<status>[+-]?)(?P<field>\w+|\*)\s+(?P<term>[^@()]+)|(?P<all>[^@()]+)#iux';
 	
 	/**
 	 * @var array Array of parsed QueryTerm objects.
@@ -32,6 +31,11 @@ class MultiFieldQuery implements \Iterator, \Countable
 	private $_user_sph_map;
 	
 	/**
+	 * @var array Mapping between user-facing query fields and Sphinx multi-value attributes.
+	 */
+	private $_user_attr_map;
+	
+	/**
 	 * Creates a multi-field query object that extracts a list of query terms from a regular
 	 * query string and allows the user to refine and toggle those terms.
 	 * 
@@ -43,11 +47,16 @@ class MultiFieldQuery implements \Iterator, \Countable
 	 * $cl->SetMatchMode(SPH_MATCH_EXTENDED2);
 	 * 
 	 * @param array $user_sph_map Mapping between user fields and actual Sphinx fields.
+	 * @param array $user_attr_map Mapping between user fields and Sphinx multi-value attributes.
 	 */
-	public function __construct ( $user_sph_map=array () )
+	public function __construct ( $user_sph_map=array (), $user_attr_map=array() )
 	{
 		$this->_user_sph_map = array_change_key_case (
 			array_map ( 'strtolower', $user_sph_map ),
+			CASE_LOWER
+		);
+		$this->_user_attr_map = array_change_key_case (
+			array_map ( 'strtolower', $user_attr_map ),
 			CASE_LOWER
 		);
 		$this->_qts = array ();
@@ -73,7 +82,7 @@ class MultiFieldQuery implements \Iterator, \Countable
 					$field, 
 					$matches['term'][$index], 
 					$matches['all'][$index] 
-				), $this->_user_sph_map ) )
+				), $this->_user_sph_map, $this->_user_attr_map ) )
 					$this->_AddQueryTerm ( $query_term );
 			}
 		}
@@ -82,6 +91,7 @@ class MultiFieldQuery implements \Iterator, \Countable
 	
 	/**
 	 * Used internally to add a QueryTerm object to the list of query terms.
+	 * Indexed by hash to prevent duplicate query terms.
 	 * 
 	 * @param QueryTerm $query_term QueryTerm object to be added.
 	 */
@@ -189,15 +199,17 @@ class MultiFieldQuery implements \Iterator, \Countable
 	/**
 	 * Return the combined query term string to be sent to Sphinx.
 	 * 
+	 * @param boolean $exclude_numeric If TRUE, returns only non-numeric terms.
 	 * @return string Combined query term string for Sphinx.
 	 */
-	public function ToSphinx ()
+	public function ToSphinx ( $exclude_numeric=false )
 	{
 		$qts = array ();
+		$sph = '';
 		
 		foreach ( $this->_qts as $qt )
 		{
-			if ( $term = $qt->ToSphinx () )
+			if ( $term = $qt->ToSphinx ( $exclude_numeric ) )
 				$qts[] = $term;
 		}
 		
@@ -229,51 +241,13 @@ class MultiFieldQuery implements \Iterator, \Countable
 	}
 	
 	/**
-	 * Iterator interface method. Return the pointer to the first query term.
-	 */
-	public function rewind ()
-	{
-		return reset ( $this->_qts );
-	}
-	
-	/**
-	 * Iterator interface method. Return the current query term.
+	 * IteratorAggregate interface method. Makes the query terms iterable.
 	 * 
-	 * @return QueryTerm|null Current query term, or null if not found.
+	 * @return ArrayIterator Array iterator object.
 	 */
-	public function current ()
+	public function getIterator ()
 	{
-		return current ( $this->_qts );
-	}
-	
-	/**
-	 * Iterator interface method. Return the index of the current query term.
-	 * 
-	 * @return integer Index of query term.
-	 */
-	public function key ()
-	{
-		return key ( $this->_qts );
-	}
-	
-	/**
-	 * Iterator interface method. Move forward to the next query term.
-	 * 
-	 * @return QueryTerm|null Next query term, or null if not found.
-	 */
-	public function next ()
-	{
-		return next ( $this->_qts );
-	}
-	
-	/**
-	 * Iterator interface method. Check if there is a current query term.
-	 * 
-	 * @return boolean Whether the current query term exists.
-	 */
-	public function valid ()
-	{
-		return ( key ( $this->_qts ) !== null );
+		return new \ArrayIterator ( $this->_qts );
 	}
 	
 	/**

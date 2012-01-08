@@ -20,19 +20,30 @@ class QueryTerm
 	private $_term;
 	
 	/**
+	 * @var string User-facing query term value.
+	 */
+	private $_user_term;
+	
+	/**
 	 * @var string User-facing query field name.
 	 */
 	private $_user_field;
 	
 	/**
-	 * @var array Mapping between user-facing query fields and the actual Sphinx fields.
+	 * @var array Mapping between user-facing query field and the actual Sphinx field.
 	 */
 	private $_sph_field;
 	
 	/**
+	 * @var array Mapping between user-facing query field and the multi-value Sphinx attribute.
+	 */
+	private $_attr_field;
+	
+	/**
 	 * Creates a single query term used internally by the MultiFieldQuery object.
 	 * A raw query term is of the form "@genre drama" where "genre" is the field to filter by
-	 * and "drama" is the filtering term.
+	 * and "drama" is the filtering term. Numerical terms may also be used if the FSphinx client
+	 * is configured to filter by multi-valued attribute IDs.
 	 * 
 	 * Query terms may be created from an FSphinx result array or a string representation.
 	 * 
@@ -40,18 +51,23 @@ class QueryTerm
 	 * @param string $field Field to filter by.
 	 * @param string $term Term to filter by.
 	 * @param array $user_sph_map Mapping between user fields and actual Sphinx fields.
+	 * @param array $user_attr_map Mapping between user fields and Sphinx multi-value attributes.
 	 */
-	public function __construct ( $status, $field, $term, array $user_sph_map=array () )
+	public function __construct ( $status, $field, $term, array $user_sph_map=array (), array $user_attr_map=array () )
 	{
 		$field = strtolower ( trim ( $field ) );
 		
 		$this->_status = $status;
 		$this->_term = trim ( $term );
+		$this->_user_term = $this->_term;
 		$this->_user_field = $field;
 		
-		// If Sphinx field mapping not found, use the field name per se.
+		// If Sphinx field mapping not found, use default values.
 		$this->_sph_field = isset ( $user_sph_map[$field] ) ?
 			strtolower ( $user_sph_map[$field] ) : $field;
+		
+		$this->_attr_field = isset ( $user_attr_map[$field] ) ?
+			strtolower ( $user_attr_map[$field] ) : $field . '_attr';
 	}
 	
 	/**
@@ -59,9 +75,10 @@ class QueryTerm
 	 * 
 	 * @param array $match Result match to be parsed.
 	 * @param array $user_sph_map Mapping between user fields and actual Sphinx fields.
+	 * @param array $user_attr_map Mapping between user fields and Sphinx multi-value attributes.
 	 * @return QueryTerm|null Parsed query term, or null if invalid.
 	 */
-	public static function FromMatchObject ( array $match, array $user_sph_map=array () )
+	public static function FromMatchObject ( array $match, array $user_sph_map=array (), array $user_attr_map=array () )
 	{
 		if ( !$match )
 			return null;
@@ -81,7 +98,7 @@ class QueryTerm
 			$status = '';
 			
 		if ( trim ( $field ) )
-			return new QueryTerm ( $status, $field, $term, $user_sph_map );
+			return new QueryTerm ( $status, $field, $term, $user_sph_map, $user_attr_map );
 			
 		return null;
 	}
@@ -91,9 +108,10 @@ class QueryTerm
 	 * 
 	 * @param string $str String to be parsed.
 	 * @param array $user_sph_map Mapping between user fields and actual Sphinx fields.
+	 * @param array $user_attr_map Mapping between user fields and Sphinx multi-value attributes.
 	 * @return QueryTerm|null Parsed query term, or null if invalid.
 	 */
-	public static function FromString ( $str, array $user_sph_map=array () )
+	public static function FromString ( $str, array $user_sph_map=array (), array $user_attr_map=array () )
 	{
 		if ( @preg_match ( MultiFieldQuery::QUERY_PATTERN, $str, $match ) !== false )
 		{
@@ -102,7 +120,7 @@ class QueryTerm
 				$match['field'],
 				$match['term'],
 				isset ( $match['all'] ) ? $match['all'] : ''
-			), $user_sph_map );
+			), $user_sph_map, $user_attr_map );
 		}
 		
 		return null;
@@ -137,7 +155,7 @@ class QueryTerm
 	 */
 	public function __toString ()
 	{
-		return sprintf ( '(@%s%s %s)', $this->_status, $this->_user_field, $this->_term );
+		return sprintf ( '(@%s%s %s)', $this->_status, $this->_user_field, $this->_user_term );
 	}
 	
 	/**
@@ -153,17 +171,22 @@ class QueryTerm
 	/**
 	 * Return the query term string to be sent to Sphinx.
 	 * 
+	 * @param boolean $exclude_numeric If TRUE, returns only if non-numeric term.
 	 * @return string Query term string for Sphinx.
 	 */
-	public function ToSphinx ()
+	public function ToSphinx ( $exclude_numeric=false )
 	{
+		if ( $exclude_numeric && is_numeric ( $this->_term ) )
+			return '';
+		
 		$term = @preg_replace ( '#(\w)(-)(\w)#u', '\\1 \\3', $this->_term );
+		$term = str_replace ( '"', '', $this->_term );
 		if ( $this->_status == '' || $this->_status == '+' )
 		{
 			if ( strpos ( $term, ' ' ) !== false )
-				return sprintf ( '(@%s "%s")', $this->_sph_field, $term );
-			else
-				return sprintf ( '(@%s %s)', $this->_sph_field, $term );
+				$term = '"' . $term . '"';
+			
+			return sprintf ( '(@%s %s)', $this->_sph_field, $term );
 		}
 		return '';
 	}
@@ -209,6 +232,26 @@ class QueryTerm
 	}
 	
 	/**
+	 * Return the Sphinx field name of the query term.
+	 * 
+	 * @return string Sphinx field name.
+	 */
+	public function GetSphinxField ()
+	{
+		return $this->_sph_field;
+	}
+	
+	/**
+	 * Return the Sphinx multi-value attribute name for the query term.
+	 * 
+	 * @return string Sphinx multi-value attribute.
+	 */
+	public function GetAttribute ()
+	{
+		return $this->_attr_field;
+	}
+	
+	/**
 	 * Return the value of the query term.
 	 * 
 	 * @return string Query term value.
@@ -216,6 +259,16 @@ class QueryTerm
 	public function GetTerm ()
 	{
 		return $this->_term;
+	}
+	
+	/**
+	 * Set the user-facing query term value (usually matching a string to the corresponding ID).
+	 * 
+	 * @param string $term User-facing query term value.
+	 */
+	public function SetUserTerm ( $term )
+	{
+		$this->_user_term = $term;
 	}
 	
 	/**

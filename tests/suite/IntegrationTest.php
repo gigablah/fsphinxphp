@@ -8,6 +8,7 @@ use \FSphinx\FacetGroupCache;
 class IntegrationTest extends PHPUnit_Framework_TestCase
 {
 	protected $cl;
+	protected $cache;
 	
 	protected function setUp()
 	{
@@ -35,12 +36,18 @@ class IntegrationTest extends PHPUnit_Framework_TestCase
 			$facet->SetOrderBy('@term', 'asc');
 			$facet->SetMaxNumValues(5);
 		}
-		$this->cl->AttachQueryParser(new MultiFieldQuery(array(
-			'genre'=>'genres',
-			'keyword'=>'plot_keywords',
-			'director'=>'directors',
-			'actor'=>'actors'
-		)));
+		$this->cl->AttachQueryParser(new MultiFieldQuery(
+			array(
+				'genre'=>'genres',
+				'keyword'=>'plot_keywords',
+				'director'=>'directors',
+				'actor'=>'actors'
+			),
+			array(
+				'keyword'=>'plot_keyword_attr'
+			)
+		));
+		$this->cache = new FacetGroupCache();
 	}
 	
 	public function testFullQuery()
@@ -85,8 +92,8 @@ class IntegrationTest extends PHPUnit_Framework_TestCase
 			$this->markTestSkipped('APC is not enabled on command line. Please set apc.enable_cli = 1');
 		}
 		
-		$this->cache = new FacetGroupCache();
 		$this->cache->Clear(true);
+		$this->cl->facets->AttachCache($this->cache);
 		
 		$results = $this->cl->Query('drama');
 		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
@@ -235,6 +242,49 @@ class IntegrationTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(0, $this->cl->facets->GetTime());
 	}
 	
+	public function testAttributeFiltering()
+	{
+		$this->cl->SetFiltering(true);
+		$results = $this->cl->Query('drama (@actor 151) (@director 142)');
+		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
+		
+		$ids = array();
+		
+		foreach ($results['matches'] as $id => $result) {
+			$ids[] = $id;
+		}
+		$this->assertEquals(array(
+			405159, 105695
+		), $ids);
+
+		$ids = array();
+		foreach ($this->cl->facets as $index => $facet)
+		{
+			$ids[$index] = array();
+			foreach ($facet as $match)
+			{
+				$ids[$index][] = $match['@term'];
+			}
+		}
+		
+		$this->assertEquals(array(
+			1992, 2004
+		), $ids[0]);
+		$this->assertEquals(array(
+			'Clint Eastwood'
+		), $ids[3]);
+		$this->assertEquals(array(
+			'Clint Eastwood', 'David Mucci', 'Jaimz Woolvett', 'Josie Smith', 'Liisa Repo-Martell', 'Morgan Freeman'
+		), $ids[4]);
+		
+		// check that the terms have been passed back to the query object
+		$query = $this->cl->GetQuery();
+		$this->assertEquals(
+			'(@* drama) (@actor Morgan Freeman) (@director Clint Eastwood)',
+			$query->__toString()
+		);
+	}
+	
 	public function testConfigFile()
 	{
 		$sphinx = FSphinxClient::FromConfig(dirname(dirname(dirname(__FILE__))) . '/src/config.sample.php');
@@ -260,5 +310,10 @@ class IntegrationTest extends PHPUnit_Framework_TestCase
 			}
 		}
 		$this->assertEquals($ids1, $ids2);
+	}
+	
+	protected function tearDown()
+	{
+		$this->cache->Clear(true);
 	}
 }

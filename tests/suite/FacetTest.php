@@ -5,7 +5,6 @@ use \FSphinx\MultiFieldQuery;
 use \FSphinx\Facet;
 use \FSphinx\FacetGroup;
 use \FSphinx\FacetGroupCache;
-use \FSphinx\DataFetchInterface;
 
 class FacetTest extends PHPUnit_Framework_TestCase
 {
@@ -21,7 +20,8 @@ class FacetTest extends PHPUnit_Framework_TestCase
 		$this->cl->SetServer(SPHINX_HOST, SPHINX_PORT);
 		$this->cl->SetDefaultIndex('items');
 		$this->cl->SetMatchMode(SPH_MATCH_EXTENDED2);
-		$this->cl->AttachQueryParser(new MultiFieldQuery());
+		$this->cl->AttachQueryParser(new MultiFieldQuery(array('actor'=>'actors')));
+		$this->cache = new FacetGroupCache();
 	}
 	
 	public function testCompute()
@@ -104,6 +104,40 @@ class FacetTest extends PHPUnit_Framework_TestCase
 		), $ids);
 	}
 	
+	public function testAttributeFiltering()
+	{
+		$this->factor = new Facet('actor');
+		$this->factor->AttachSphinxClient($this->cl);
+		$this->factor->SetMaxNumValues(5);
+		$this->factor->SetGroupFunc('sum(user_rating_attr * nb_votes_attr)');
+		$this->factor->SetOrderBy('@groupfunc', 'desc');
+		$this->factor->AttachDataFetch($this->factor, array('name'=>'actor_terms_attr'));
+		$this->cl->SetFiltering(false);
+		
+		$results = $this->factor->Compute('drama (@actor "Morgan Freeman")');
+		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
+		$ids = array();
+		foreach ($this->factor as $match)
+		{
+			$ids[] = $match['@term'];
+		}
+		$this->assertEquals(array(
+			'Morgan Freeman', 'Bob Gunton', 'Gil Bellows', 'Mark Rolston', 'Tim Robbins', 'Clancy Brown'
+		), $ids);
+		
+		$this->cl->SetFiltering(true);
+		$results = $this->factor->Compute('drama (@actor 151)');
+		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
+		$ids = array();
+		foreach ($this->factor as $match)
+		{
+			$ids[] = $match['@term'];
+		}
+		$this->assertEquals(array(
+			'Morgan Freeman', 'Bob Gunton', 'Gil Bellows', 'Mark Rolston', 'Tim Robbins', 'Clancy Brown'
+		), $ids);
+	}
+	
 	public function testAlphabeticalOrder()
 	{
 		$this->factor = new Facet('actor');
@@ -132,7 +166,6 @@ class FacetTest extends PHPUnit_Framework_TestCase
 			$this->markTestSkipped('APC is not enabled on command line. Please set apc.enable_cli = 1');
 		}
 		
-		$this->cache = new FacetGroupCache();
 		$this->cache->Clear(true);
 		$this->factor = new Facet('actor');
 		$this->factor->SetMaxNumValues(5);
@@ -143,6 +176,7 @@ class FacetTest extends PHPUnit_Framework_TestCase
 		$this->fyear->SetMaxNumValues(5);
 		$this->facets = new FacetGroup($this->fyear, $this->factor);
 		$this->facets->AttachSphinxClient($this->cl);
+		$this->facets->AttachCache($this->cache);
 		
 		$results = $this->facets->Compute('drama', false);
 		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
@@ -177,5 +211,10 @@ class FacetTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(array(
 			'Morgan Freeman', 'Robert De Niro', 'Al Pacino', 'Robert Duvall', 'John Cazale'
 		), $ids[1]);
+	}
+	
+	protected function tearDown()
+	{
+		$this->cache->Clear(true);
 	}
 }

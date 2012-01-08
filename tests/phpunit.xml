@@ -6,13 +6,13 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-		 stopOnError="false"
+         stopOnError="false"
          stopOnFailure="false"
-		 stopOnIncomplete="false"
-		 stopOnSkipped="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
          syntaxCheck="false"
-		 bootstrap="bootstrap.php"
-		 strict="true">
+         bootstrap="bootstrap.php"
+         strict="true">
 	<php>
 		<env name="APPLICATION_ENV" value="test"/>
 	</php>

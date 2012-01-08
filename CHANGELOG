@@ -1,3 +1,11 @@
+## 2012-01-08 v1.0.2 ##
+
+* Bugfix: query terms quoted twice
+* Added FSphinxClient::SetFiltering() to compute facet values via ID filter rather than string match
+* Added parameter to MultiFieldQuery and QueryTerm constructors to define mappings to MVA attributes
+* Changed fsphinxapi.php to use an autoloader
+* Changed iterable classes to implement IteratorAggregate
+
 ## 2012-01-07 v1.0.1 ##
 
 * Skip Facet computation if the main Sphinx query returns no results

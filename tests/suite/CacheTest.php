@@ -126,4 +126,9 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		$results = $this->cache->GetFacets($this->query);
 		$this->assertEquals($results, false);
 	}
+	
+	protected function tearDown()
+	{
+		$this->cache->Clear(true);
+	}
 }

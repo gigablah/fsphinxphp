@@ -7,7 +7,7 @@ namespace FSphinx;
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
-class FacetGroup implements \Iterator, \Countable
+class FacetGroup implements \IteratorAggregate, \Countable
 {
 	/**
 	 * @var array Array of Facet objects.
@@ -45,11 +45,6 @@ class FacetGroup implements \Iterator, \Countable
 	private $_caching;
 	
 	/**
-	 * @var integer Internal pointer for implementing Iterator behaviour.
-	 */
-	private $_pointer;
-	
-	/**
 	 * Creates a collection of Facets which adds enhancements like batch queries and caching.
 	 * With batch querying, multiple Facets can be computed with one single call to Sphinx.
 	 * Facets may be preloaded or cached to improve performance.
@@ -70,17 +65,20 @@ class FacetGroup implements \Iterator, \Countable
 		$this->_datafetch = null;
 		$this->_cache = null;
 		$this->_time = 0;
-		$this->_pointer = 0;
 		$this->_facets = array ();
 		
 		foreach ( $objects as $object )
 		{
-			if ( is_object ( $object ) && $object instanceof Facet )
+			if ( !is_object ( $object ) )
+				continue;
+			elseif ( $object instanceof Facet )
 				$this->AttachFacet ( $object );
-			if ( is_object ( $object ) && $object instanceof \SphinxClient )
+			elseif ( $object instanceof \SphinxClient )
 				$this->AttachSphinxClient ( $object );
-			if ( is_object ( $object ) && $object instanceof DataFetchInterface )
+			elseif ( $object instanceof DataFetchInterface )
 				$this->AttachDataFetch ( $object );
+			elseif ( $object instanceof FacetGroupCache )
+				$this->AttachCache ( $object );
 		}
 		
 		// Caching parameters
@@ -120,11 +118,13 @@ class FacetGroup implements \Iterator, \Countable
 	}
 	
 	/**
-	 * Set the cache for storing computed Facet values.
+	 * Attach a cache for storing computed Facet values.
+	 * 
+	 * @param FacetGroupCache $cache Object that provides an interface to a datastore.
 	 */
-	public function SetCache ()
+	public function AttachCache ( FacetGroupCache $cache )
 	{
-		$this->_cache = new FacetGroupCache ( $this->_facets );
+		$this->_cache = $cache;
 	}
 	
 	/**
@@ -218,7 +218,7 @@ class FacetGroup implements \Iterator, \Countable
 	 */
 	public function _Reset ()
 	{
-		foreach ( $this->_facets as $index => $facet )
+		foreach ( $this->_facets as $facet )
 			$facet->_Reset ();
 		
 		$this->_time = 0;
@@ -262,17 +262,18 @@ class FacetGroup implements \Iterator, \Countable
 	 * Compute the values for all Facets for a given query and store the results in the cache.
 	 * 
 	 * @param MultiFieldQuery|string $query Sphinx query to be computed.
+	 * @return boolean TRUE on success, FALSE on failure.
 	 */
 	public function Preload ( $query )
 	{
 		if ( !$this->_cache )
-			$this->SetCache ();
+			return false;
 		
 		if ( !( $query instanceof MultiFieldQuery ) )
 			$query = $this->_sphinx->Parse ( $query );
 		
 		$this->Compute ( $query, false );
-		$this->_cache->SetFacets ( $query, $this->_facets, true, true );
+		return $this->_cache->SetFacets ( $query, $this->_facets, true, true );
 	}
 	
 	/**
@@ -284,14 +285,16 @@ class FacetGroup implements \Iterator, \Countable
 	 */
 	protected function _ComputeCache ( $query, $caching=true )
 	{
-		if ( !$this->_cache )
-			$this->SetCache ();
+		$results = null;
 		
-		if ( !( $query instanceof MultiFieldQuery ) )
-			$query = $this->_sphinx->Parse ( $query );
-		
-		// attempt to get results from cache
-		$results = $this->_cache->GetFacets ( $query );
+		if ( $this->_cache )
+		{
+			if ( !( $query instanceof MultiFieldQuery ) )
+				$query = $this->_sphinx->Parse ( $query );
+			
+			// attempt to get results from cache
+			$results = $this->_cache->GetFacets ( $query );
+		}
 		
 		if ( $results )
 		{
@@ -308,7 +311,7 @@ class FacetGroup implements \Iterator, \Countable
 		}
 		
 		// save to cache if caching is enabled
-		if ( $caching )
+		if ( $this->_cache && $caching )
 			$this->_cache->SetFacets ( $query, $this->_facets );
 			
 		return $results;
@@ -344,51 +347,13 @@ class FacetGroup implements \Iterator, \Countable
 	}
 	
 	/**
-	 * Iterator interface method. Return the pointer to the first Facet object.
-	 */
-	public function rewind ()
-	{
-		return reset ( $this->_facets );
-	}
-	
-	/**
-	 * Iterator interface method. Return the current Facet.
+	 * IteratorAggregate interface method. Makes the facet group iterable.
 	 * 
-	 * @return Facet|null Current Facet, or null if not found.
+	 * @return ArrayIterator Array iterator object.
 	 */
-	public function current ()
+	public function getIterator ()
 	{
-		return current ( $this->_facets );
-	}
-	
-	/**
-	 * Iterator interface method. Return the index of the current Facet.
-	 * 
-	 * @return integer Index of current Facet.
-	 */
-	public function key ()
-	{
-		return key ( $this->_facets );
-	}
-	
-	/**
-	 * Iterator interface method. Move forward to the next Facet.
-	 * 
-	 * @return Facet|null Next Facet, or null if not found.
-	 */
-	public function next ()
-	{
-		return next ( $this->_facets );
-	}
-	
-	/**
-	 * Iterator interface method. Check if there is a current Facet.
-	 * 
-	 * @return boolean Whether the current Facet exists.
-	 */
-	public function valid ()
-	{
-		return ( key ( $this->_facets ) !== null );
+		return new \ArrayIterator ( $this->_facets );
 	}
 	
 	/**

@@ -3,9 +3,6 @@
 use \FSphinx\FSphinxClient;
 use \FSphinx\MultiFieldQuery;
 use \FSphinx\Facet;
-use \FSphinx\FacetGroup;
-use \FSphinx\FacetGroupCache;
-use \FSphinx\DataFetchInterface;
 
 class SphinxTest extends PHPUnit_Framework_TestCase
 {

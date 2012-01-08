@@ -48,8 +48,9 @@ class FacetGroupCache
 	 * @param array $facets Array of Facet objects.
 	 * @param boolean $replace Whether to replace existing values.
 	 * @param boolean $sticky Whether to make the cached values sticky (for preloaded Facets).
+	 * @return boolean TRUE on success, FALSE on failure.
 	 */
-	public function SetFacets ( MultiFieldQuery $query, $facets, $replace=false, $sticky=false )
+	public function SetFacets ( MultiFieldQuery $query, array $facets, $replace=false, $sticky=false )
 	{
 		if ( !extension_loaded ('apc') || ini_get ('apc.enabled') != '1' )
 			return false;
@@ -63,15 +64,16 @@ class FacetGroupCache
 		$results = serialize ( $results );
 		
 		if ( $replace )
-			apc_store ( $key, $results );
+			return apc_store ( $key, $results );
 		else
-			apc_add ( $key, $results );
+			return apc_add ( $key, $results );
 	}
 	
 	/**
 	 * Clear the cache.
 	 * 
 	 * @param boolean $clear_sticky Whether to clear preloaded Facet values as well.
+	 * @return boolean TRUE on success, FALSE on failure.
 	 */
 	public function Clear ( $clear_sticky=false )
 	{
@@ -85,8 +87,8 @@ class FacetGroupCache
 			APC_ITER_KEY
 		);
 		
-		foreach ( $entries as $key => $data )
-			apc_delete ( $key );
+		// apc_delete accepts APCIterator
+		return apc_delete ( $entries );
 	}
 	
 	/**
@@ -95,6 +97,7 @@ class FacetGroupCache
 	 * @param string $string Candidate key.
 	 * @param boolean $sticky Whether to generate a sticky key.
 	 * @param boolean $regex Whether to return the regex for the key prefix instead.
+	 * @return string Generated cache key.
 	 */
 	public function GetKey ( $string=null, $sticky=false, $regex=false )
 	{

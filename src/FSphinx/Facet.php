@@ -8,9 +8,11 @@ namespace FSphinx;
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
-class Facet implements \Iterator, \Countable, DataFetchInterface
+class Facet implements \IteratorAggregate, \Countable, DataFetchInterface
 {
-	/** Facet identifier, used as a basis for some default values. */
+	/** 
+	 * @var string Facet identifier, used as a basis for some default values.
+	 */
 	private $_name;
 	
 	/**
@@ -106,8 +108,10 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 	 * "directors", links imdb_id to imdb_director_id. To build a director
 	 * facet, the attribute could be defined like this:
 	 * 
+	 * <code>
 	 * sql_attr_multi = uint director_attr from query;
 	 *                  select imdb_id, imdb_director_id from directors
+	 * </code>
 	 * 
 	 * Additionally there needs to be a corresponding data source which maps ids
 	 * to terms. This is because Sphinx only supports integers for multi-valued
@@ -120,20 +124,24 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 	 * a separate index must be defined that serves as a lookup dictionary. The
 	 * attributes can be defined as follows:
 	 * 
+	 * <code>
 	 * sql_query = select imdb_director_id, director, \
 	 *             imdb_director_id as director_id_attr, \
 	 *             director as director_term_attr from director_terms
 	 * sql_attr_uint = director_id_attr
 	 * sql_attr_string = director_term_attr
+	 * </code>
 	 * 
 	 * For a Facet to use itself as a data source, the id-term mapping must be
 	 * returned in the result array in serialized form. This can be achieved by
 	 * concatenating the ids and terms in a separate column in the main query:
 	 * 
+	 * <code>
 	 * (SELECT GROUP_CONCAT(DISTINCT CONCAT(imdb_director_id,',',director_name))
 	 * FROM directors d WHERE d.imdb_id = title.imdb_id) AS director_terms_attr
 	 * 
 	 * sql_attr_string = director_terms_attr
+	 * </code>
 	 * 
 	 * When a Facet is attached to itself as a data source, the string attribute
 	 * as defined in the "source" parameter in $options will be supplied to
@@ -360,7 +368,7 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 	 */
 	public function SetAugment ( $augment )
 	{
-		$this->_augment = $augment;
+		$this->_augment = $augment ? true : false;
 	}
 	
 	/**
@@ -439,8 +447,7 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 		$sphinx->SetLimits ( 0, $max_num_values, $this->_max_matches, $this->_cutoff );
 		$sphinx->SetSelect ( $this->_set_select );
 		$sphinx->SetGroupBy ( $this->_attr, $this->_func, $this->_group_sort );
-		$sphinx->AddQuery ( $query->ToSphinx (), $this->_default_index );
-		
+		$sphinx->AddQuery ( $query, $this->_default_index );
 		$sphinx->LoadOptions ();
 		
 		return $query;
@@ -519,6 +526,13 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 			$value['@selected'] = $query->HasQueryTerm ( $term ) ? 'True' : 'False';
 			$this->_results['matches'][] = $value;
 		}
+		
+		// supply the query object with matched terms as well
+		foreach ( $query as $qt )
+		{
+			if ( $qt->HasField ( $this->_sph_field ) && isset ( $terms[$qt->GetTerm ()] ) )
+				$qt->SetUserTerm ( $terms[$qt->GetTerm ()] );
+		}
 	}
 	
 	/**
@@ -570,6 +584,16 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 	public function GetName ()
 	{
 		return $this->_name;
+	}
+	
+	/**
+	 * Return the attribute field of the Facet.
+	 * 
+	 * @return string Attribute field.
+	 */
+	public function GetAttribute ()
+	{
+		return $this->_attr;
 	}
 	
 	/**
@@ -666,51 +690,13 @@ class Facet implements \Iterator, \Countable, DataFetchInterface
 	}
 	
 	/**
-	 * Iterator interface method. Return the pointer to the first result element.
-	 */
-	public function rewind ()
-	{
-		return reset ( $this->_results['matches'] );
-	}
-	
-	/**
-	 * Iterator interface method. Return the current result element.
+	 * IteratorAggregate interface method. Makes the Facet values iterable.
 	 * 
-	 * @return array|null Current result element, or null if not found.
+	 * @return ArrayIterator Array iterator object.
 	 */
-	public function current ()
+	public function getIterator ()
 	{
-		return current ( $this->_results['matches'] );
-	}
-	
-	/**
-	 * Iterator interface method. Return the index of the current result element.
-	 * 
-	 * @return integer Index of current element.
-	 */
-	public function key ()
-	{
-		return key ( $this->_results['matches'] );
-	}
-	
-	/**
-	 * Iterator interface method. Move forward to the next result element.
-	 * 
-	 * @return array|null Next result element, or null if not found.
-	 */
-	public function next ()
-	{
-		return next ( $this->_results['matches'] );
-	}
-	
-	/**
-	 * Iterator interface method. Check if there is a current result element.
-	 * 
-	 * @return boolean Whether the current result element exists.
-	 */
-	public function valid ()
-	{
-		return ( key ( $this->_results['matches'] ) !== null );
+		return new \ArrayIterator ( $this->_results['matches'] );
 	}
 	
 	/**

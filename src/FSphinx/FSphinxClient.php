@@ -35,6 +35,11 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 	private $_default_index;
 	
 	/**
+	 * @var boolean If TRUE, uses filtering by ID rather than attribute string matching.
+	 */
+	private $_filtering;
+	
+	/**
 	 * @var array Temporary cache for Sphinx client settings.
 	 */
 	private $_options;
@@ -51,6 +56,7 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 		$this->_query_parser = null;
 		$this->_query = null;
 		$this->_default_index = $default_index ?: '*';
+		$this->_filtering = false;
 		$this->_options = array ();
 		
 		parent::SphinxClient ();
@@ -110,7 +116,9 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 		$query = $this->_query = $this->Parse ( $query );
 		
 		// perform a normal query
-		$results = parent::Query ( $query->ToSphinx (), $index ?: $this->_default_index, $comment );
+		$this->AddQuery ( $query, $index ?: $this->_default_index, $comment );
+		$results = $this->RunQueries ();
+		$results = $results[0];
 		
 		// compute all facets if there are results found
 		if ( $this->facets )
@@ -127,7 +135,7 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 	/**
 	 * Add a query to Sphinx, to be run as part of a batch.
 	 * 
-	 * @param string $query Sphinx query to be computed.
+	 * @param MultiFieldQuery|string $query Sphinx query to be computed.
 	 * @param string $index (Optional) Limit Sphinx search to this index.
 	 * @param string $comment (Optional) Comment associated with this query.
 	 * @return integer Number of requests.
@@ -135,7 +143,37 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 	public function AddQuery ( $query, $index=null, $comment="" )
 	{
 		$index = $index ?: $this->_default_index;
-		return parent::AddQuery ( $query, $index, $comment );
+		
+		if ( $query instanceof MultiFieldQuery )
+		{
+			if ( $this->_filtering )
+				$this->SetFilters ( $query );
+			
+			$result = parent::AddQuery ( $query->ToSphinx ( $this->_filtering ), $index, $comment );
+			
+			if ( $this->_filtering )
+				$this->ResetFilters ();
+		}
+		else
+		{
+			$result = parent::AddQuery ( $query, $index, $comment );
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Set Facet attribute filters for a Sphinx query.
+	 * 
+	 * @param MultiFieldQuery $query Sphinx query to be computed.
+	 */
+	public function SetFilters ( MultiFieldQuery $query )
+	{
+		foreach ( $query as $qt )
+		{
+			if ( is_numeric ( $qt->GetTerm () ) )
+				$this->SetFilter ( $qt->GetAttribute (), array ( $qt->GetTerm () ) );
+		}
 	}
 	
 	/**
@@ -157,6 +195,26 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 	public function SetDefaultIndex ( $index )
 	{
 		$this->_default_index = $index;
+	}
+	
+	/**
+	 * Declare whether to use SetFilter on a numerical term instead of attribute string matching.
+	 * 
+	 * @param boolean $filtering If TRUE, filter by numerical query term.
+	 */
+	public function SetFiltering ( $filtering )
+	{
+		$this->_filtering = $filtering ? true : false;
+	}
+	
+	/**
+	 * Retrieve the query object.
+	 * 
+	 * @return MultiFieldQuery Query object.
+	 */
+	public function GetQuery ()
+	{
+		return $this->_query;
 	}
 	
 	/**
