@@ -28,7 +28,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">FSphinx PHP
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.2</span>
    </div>
    
   </td>
@@ -90,15 +90,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_h"><span>h</span></a></li>
-      <li><a href="#index_k"><span>k</span></a></li>
       <li><a href="#index_l"><span>l</span></a></li>
-      <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
       <li><a href="#index_q"><span>q</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
       <li><a href="#index_t"><span>t</span></a></li>
-      <li><a href="#index_v"><span>v</span></a></li>
     </ul>
   </div>
 </div>
@@ -108,6 +105,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_0x24"></a>- $ -</h3><ul>
 <li>$_attr
 : <a class="el" href="class_f_sphinx_1_1_facet.html#afcb761efad40a217381c18130b5f10b1">Facet</a>
+</li>
+<li>$_attr_field
+: <a class="el" href="class_f_sphinx_1_1_query_term.html#a325560fdb47b44746cdb5ccaadac1699">QueryTerm</a>
 </li>
 <li>$_augment
 : <a class="el" href="class_f_sphinx_1_1_facet.html#a264d2c9b3b132a2752924cbdcae324f3">Facet</a>
@@ -122,8 +122,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_f_sphinx_1_1_facet.html#a6506ca5d00fd56616bd4025b38db4999">Facet</a>
 </li>
 <li>$_datafetch
-: <a class="el" href="class_f_sphinx_1_1_facet.html#a856f42f36ad7f082c275937d05fee322">Facet</a>
-, <a class="el" href="class_f_sphinx_1_1_facet_group.html#a856f42f36ad7f082c275937d05fee322">FacetGroup</a>
+: <a class="el" href="class_f_sphinx_1_1_facet_group.html#a856f42f36ad7f082c275937d05fee322">FacetGroup</a>
+, <a class="el" href="class_f_sphinx_1_1_facet.html#a856f42f36ad7f082c275937d05fee322">Facet</a>
 </li>
 <li>$_default_index
 : <a class="el" href="class_f_sphinx_1_1_facet.html#a93fd95e583d2038a59769f297c4a264d">Facet</a>
@@ -131,6 +131,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>$_facets
 : <a class="el" href="class_f_sphinx_1_1_facet_group.html#ac665cf266095fc1a1e8415e41e9bfde9">FacetGroup</a>
+</li>
+<li>$_filtering
+: <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ac3f11044b93eccb9635219bec05f7514">FSphinxClient</a>
 </li>
 <li>$_func
 : <a class="el" href="class_f_sphinx_1_1_facet.html#a289fc63c224f8776bf0d7c509292f315">Facet</a>
@@ -145,7 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_f_sphinx_1_1_facet.html#ad8405086eee6404334f59469be0740c4">Facet</a>
 </li>
 <li>$_name
-: <a class="el" href="class_f_sphinx_1_1_facet.html#a1c89defaf5aa7ac8e526065e8572f580">Facet</a>
+: <a class="el" href="class_f_sphinx_1_1_facet.html#a1e52f3ad975e749d4ae5c165191c5da6">Facet</a>
 </li>
 <li>$_options
 : <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ab0cd304a53a2640dc4f15e8d6100612f">FSphinxClient</a>
@@ -155,9 +158,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>$_order_by_desc
 : <a class="el" href="class_f_sphinx_1_1_facet.html#acfe5a0818e7632227506df4c14849ddf">Facet</a>
-</li>
-<li>$_pointer
-: <a class="el" href="class_f_sphinx_1_1_facet_group.html#a3ed53b703bea94b734c3ed6d6cde1326">FacetGroup</a>
 </li>
 <li>$_preloading
 : <a class="el" href="class_f_sphinx_1_1_facet_group.html#a7d45b731ae47ef1fc68137267258a8e5">FacetGroup</a>
@@ -188,8 +188,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_f_sphinx_1_1_facet.html#ac700089e3e0c45e385feacb903740947">Facet</a>
 </li>
 <li>$_sphinx
-: <a class="el" href="class_f_sphinx_1_1_facet_group.html#a6e8ea99e71892857c46217422a80ad44">FacetGroup</a>
-, <a class="el" href="class_f_sphinx_1_1_facet.html#a6e8ea99e71892857c46217422a80ad44">Facet</a>
+: <a class="el" href="class_f_sphinx_1_1_facet.html#a6e8ea99e71892857c46217422a80ad44">Facet</a>
+, <a class="el" href="class_f_sphinx_1_1_facet_group.html#a6e8ea99e71892857c46217422a80ad44">FacetGroup</a>
 </li>
 <li>$_status
 : <a class="el" href="class_f_sphinx_1_1_query_term.html#a9a1472ba85c059f1d18ad94dabe12984">QueryTerm</a>
@@ -200,11 +200,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>$_time
 : <a class="el" href="class_f_sphinx_1_1_facet_group.html#a097c6c3e689921c5940e0d3df5b6cbc8">FacetGroup</a>
 </li>
+<li>$_user_attr_map
+: <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#a24a0372b00c73ade926e3655e857ad6f">MultiFieldQuery</a>
+</li>
 <li>$_user_field
 : <a class="el" href="class_f_sphinx_1_1_query_term.html#a8e6a5dff3c7d1c9cf8fff14338d10858">QueryTerm</a>
 </li>
 <li>$_user_sph_map
 : <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#a5ddebf753ca08bda9eb17960b162a2dc">MultiFieldQuery</a>
+</li>
+<li>$_user_term
+: <a class="el" href="class_f_sphinx_1_1_query_term.html#ab0d815eb08c94ffdbbe1ae44e1e1eb02">QueryTerm</a>
 </li>
 <li>$facets
 : <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ae5f5866bce2fc7e57126919f38fe9075">FSphinxClient</a>
@@ -216,8 +222,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>__construct()
 : <a class="el" href="class_f_sphinx_1_1_facet.html#ae2ee2269186f74cb00ef8f31519be2a6">Facet</a>
 , <a class="el" href="class_f_sphinx_1_1_facet_group.html#adb29252cbdbe423b591069713a43e354">FacetGroup</a>
-, <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#addf19102a73c1ad23a65530da1b8be29">MultiFieldQuery</a>
-, <a class="el" href="class_f_sphinx_1_1_query_term.html#acb0a9f89730ecc36aa4d88471170cc28">QueryTerm</a>
+, <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#ae560232cb71a77bca1449b0149c166a7">MultiFieldQuery</a>
+, <a class="el" href="class_f_sphinx_1_1_query_term.html#ac9519cd4ac4b79c9eafb9db7327478cd">QueryTerm</a>
 , <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a404b21469dfade7b4bea03f4dda92c0a">FSphinxClient</a>
 </li>
 <li>__toString()
@@ -261,9 +267,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>ALLOW_EMPTY
 : <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#afdc66f787d86d7813cef58b199b52952">MultiFieldQuery</a>
 </li>
+<li>AttachCache()
+: <a class="el" href="class_f_sphinx_1_1_facet_group.html#a005fb799e49d7fea5c41d123358438dc">FacetGroup</a>
+</li>
 <li>AttachDataFetch()
-: <a class="el" href="class_f_sphinx_1_1_facet_group.html#a221fca9a9e0a7ad2432c5df3bfe0ae5c">FacetGroup</a>
-, <a class="el" href="class_f_sphinx_1_1_facet.html#a8f6bac6e624e956a55924e0bd5404d0a">Facet</a>
+: <a class="el" href="class_f_sphinx_1_1_facet.html#a8f6bac6e624e956a55924e0bd5404d0a">Facet</a>
+, <a class="el" href="class_f_sphinx_1_1_facet_group.html#a221fca9a9e0a7ad2432c5df3bfe0ae5c">FacetGroup</a>
 </li>
 <li>AttachFacet()
 : <a class="el" href="class_f_sphinx_1_1_facet_group.html#a44e104c29e3901eb842b7fa06c7e9762">FacetGroup</a>
@@ -299,17 +308,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_f_sphinx_1_1_facet_group.html#a92d08c3394b0cfbd2efded1572e157c7">FacetGroup</a>
 </li>
 <li>count()
-: <a class="el" href="class_f_sphinx_1_1_facet_group.html#ac751e87b3d4c4bf2feb03bee8b092755">FacetGroup</a>
+: <a class="el" href="class_f_sphinx_1_1_facet.html#ac751e87b3d4c4bf2feb03bee8b092755">Facet</a>
+, <a class="el" href="class_f_sphinx_1_1_facet_group.html#ac751e87b3d4c4bf2feb03bee8b092755">FacetGroup</a>
 , <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#ac751e87b3d4c4bf2feb03bee8b092755">MultiFieldQuery</a>
-, <a class="el" href="class_f_sphinx_1_1_facet.html#ac751e87b3d4c4bf2feb03bee8b092755">Facet</a>
 </li>
 <li>CountField()
 : <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#a67b10924267084be85518b24cdf1459e">MultiFieldQuery</a>
-</li>
-<li>current()
-: <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#af343507d1926e6ecf964625d41db528c">MultiFieldQuery</a>
-, <a class="el" href="class_f_sphinx_1_1_facet_group.html#af343507d1926e6ecf964625d41db528c">FacetGroup</a>
-, <a class="el" href="class_f_sphinx_1_1_facet.html#af343507d1926e6ecf964625d41db528c">Facet</a>
 </li>
 </ul>
 
@@ -324,17 +328,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a7ab23c6cb84cf74ed074cc643dca100f">FSphinxClient</a>
 </li>
 <li>FromMatchObject()
-: <a class="el" href="class_f_sphinx_1_1_query_term.html#adf0aeb80475a94ffce1c09247a0d6114">QueryTerm</a>
+: <a class="el" href="class_f_sphinx_1_1_query_term.html#ac644aa6184ed16f990155dbd1e2e4c56">QueryTerm</a>
 </li>
 <li>FromString()
-: <a class="el" href="class_f_sphinx_1_1_query_term.html#a0618bd95d4f6ebd81c5d71b04b075a9f">QueryTerm</a>
+: <a class="el" href="class_f_sphinx_1_1_query_term.html#a71ec645119874a9609de517c649b421a">QueryTerm</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
+<li>GetAttribute()
+: <a class="el" href="class_f_sphinx_1_1_facet.html#a177f844d0feed73afcacc83977cc90a0">Facet</a>
+, <a class="el" href="class_f_sphinx_1_1_query_term.html#a177f844d0feed73afcacc83977cc90a0">QueryTerm</a>
+</li>
 <li>GetFacets()
 : <a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#a80c02304a0baa86686cab234d0f7ef50">FacetGroupCache</a>
+</li>
+<li>getIterator()
+: <a class="el" href="class_f_sphinx_1_1_facet.html#a7a9f937c2958e6f4dd7b030f86fb70b7">Facet</a>
+, <a class="el" href="class_f_sphinx_1_1_facet_group.html#a7a9f937c2958e6f4dd7b030f86fb70b7">FacetGroup</a>
+, <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#a7a9f937c2958e6f4dd7b030f86fb70b7">MultiFieldQuery</a>
 </li>
 <li>GetKey()
 : <a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#ad36c1bd05dec80a71b711693d527737b">FacetGroupCache</a>
@@ -345,6 +358,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>GetParams()
 : <a class="el" href="class_f_sphinx_1_1_facet.html#adb6a9586a7f9a7a11a4bfee1780dc937">Facet</a>
 </li>
+<li>GetQuery()
+: <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ab5dcee4c34d71f9f0baacb66500e2353">FSphinxClient</a>
+</li>
 <li>GetQueryTerm()
 : <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#ae9a5f359bcf7158e321ae32dee2d2c15">MultiFieldQuery</a>
 </li>
@@ -354,6 +370,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>GetSource()
 : <a class="el" href="class_f_sphinx_1_1_facet.html#a03064d680ff619f8fd71189bfaacc132">Facet</a>
 </li>
+<li>GetSphinxField()
+: <a class="el" href="class_f_sphinx_1_1_query_term.html#ad82ba07df98ccbcd8230920fac58ccf5">QueryTerm</a>
+</li>
 <li>GetStatus()
 : <a class="el" href="class_f_sphinx_1_1_query_term.html#ab735f5a4ded9f9c9a5b04f182205fd7d">QueryTerm</a>
 </li>
@@ -361,8 +380,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_f_sphinx_1_1_query_term.html#a93fb5296b35e0dd9b5196a33bea7e5a6">QueryTerm</a>
 </li>
 <li>GetTime()
-: <a class="el" href="class_f_sphinx_1_1_facet.html#a8817c0cddb25bdfa0d6d45b2b1818a7e">Facet</a>
-, <a class="el" href="class_f_sphinx_1_1_facet_group.html#a8817c0cddb25bdfa0d6d45b2b1818a7e">FacetGroup</a>
+: <a class="el" href="class_f_sphinx_1_1_facet_group.html#a8817c0cddb25bdfa0d6d45b2b1818a7e">FacetGroup</a>
+, <a class="el" href="class_f_sphinx_1_1_facet.html#a8817c0cddb25bdfa0d6d45b2b1818a7e">Facet</a>
 </li>
 <li>GetUserField()
 : <a class="el" href="class_f_sphinx_1_1_query_term.html#afc8f658686d2471176369f6a8c002069">QueryTerm</a>
@@ -380,27 +399,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 
 
-<h3><a class="anchor" id="index_k"></a>- k -</h3><ul>
-<li>key()
-: <a class="el" href="class_f_sphinx_1_1_facet.html#a729e946b4ef600e71740113c6d4332c0">Facet</a>
-, <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#a729e946b4ef600e71740113c6d4332c0">MultiFieldQuery</a>
-, <a class="el" href="class_f_sphinx_1_1_facet_group.html#a729e946b4ef600e71740113c6d4332c0">FacetGroup</a>
-</li>
-</ul>
-
-
 <h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
 <li>LoadOptions()
 : <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#aa2e4703680bd1db02d2e26ce43406256">FSphinxClient</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
-<li>next()
-: <a class="el" href="class_f_sphinx_1_1_facet.html#acea62048bfee7b3cd80ed446c86fb78a">Facet</a>
-, <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#acea62048bfee7b3cd80ed446c86fb78a">MultiFieldQuery</a>
-, <a class="el" href="class_f_sphinx_1_1_facet_group.html#acea62048bfee7b3cd80ed446c86fb78a">FacetGroup</a>
 </li>
 </ul>
 
@@ -427,11 +428,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
-<li>rewind()
-: <a class="el" href="class_f_sphinx_1_1_facet.html#ae619dcf2218c21549cb65d875bbc6c9c">Facet</a>
-, <a class="el" href="class_f_sphinx_1_1_facet_group.html#ae619dcf2218c21549cb65d875bbc6c9c">FacetGroup</a>
-, <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#ae619dcf2218c21549cb65d875bbc6c9c">MultiFieldQuery</a>
-</li>
 <li>RunQueries()
 : <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a0d53ee898449d69c44170701627d5b92">FSphinxClient</a>
 </li>
@@ -445,9 +441,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>SetAugment()
 : <a class="el" href="class_f_sphinx_1_1_facet.html#a0b099101f3d5c2bc1e0aaf6176ae3abc">Facet</a>
 </li>
-<li>SetCache()
-: <a class="el" href="class_f_sphinx_1_1_facet_group.html#ab30122aa74cd3662c3de693a790b5ec2">FacetGroup</a>
-</li>
 <li>SetCaching()
 : <a class="el" href="class_f_sphinx_1_1_facet_group.html#a82a517642234aa1b46c8d59452d26353">FacetGroup</a>
 </li>
@@ -459,7 +452,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a66134a69aecbe07f44be7e22cfd6685d">FSphinxClient</a>
 </li>
 <li>SetFacets()
-: <a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#a02efe2955cdf1492eac3258ac59c5e46">FacetGroupCache</a>
+: <a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#a01d56c24ad96f7a9add612fdf0a27c77">FacetGroupCache</a>
+</li>
+<li>SetFiltering()
+: <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ab601674e9313b2f2103bf13755f98fa6">FSphinxClient</a>
+</li>
+<li>SetFilters()
+: <a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a222ca1e6b167bc22b1ce21289ded5c81">FSphinxClient</a>
 </li>
 <li>SetGroupBy()
 : <a class="el" href="class_f_sphinx_1_1_facet.html#aa1870c356ee66cb8b96fc082d6411245">Facet</a>
@@ -494,6 +493,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>SetStatus()
 : <a class="el" href="class_f_sphinx_1_1_query_term.html#acd9f59f8dd44e4324278049a50490f93">QueryTerm</a>
 </li>
+<li>SetUserTerm()
+: <a class="el" href="class_f_sphinx_1_1_query_term.html#a5e0281b23ef80a55b4b0ef24c73b5057">QueryTerm</a>
+</li>
 </ul>
 
 
@@ -518,17 +520,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_f_sphinx_1_1_query_term.html#a711a8053beb149d301d25d6d918cac83">QueryTerm</a>
 </li>
 <li>ToSphinx()
-: <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#a24ad5c55b8e94e5221e51b2b33494a82">MultiFieldQuery</a>
-, <a class="el" href="class_f_sphinx_1_1_query_term.html#a24ad5c55b8e94e5221e51b2b33494a82">QueryTerm</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
-<li>valid()
-: <a class="el" href="class_f_sphinx_1_1_facet.html#abb9f0d6adf1eb9b3b55712056861a247">Facet</a>
-, <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#abb9f0d6adf1eb9b3b55712056861a247">MultiFieldQuery</a>
-, <a class="el" href="class_f_sphinx_1_1_facet_group.html#abb9f0d6adf1eb9b3b55712056861a247">FacetGroup</a>
+: <a class="el" href="class_f_sphinx_1_1_multi_field_query.html#aecf6857f4d7d562e7fef098d415d6d9b">MultiFieldQuery</a>
+, <a class="el" href="class_f_sphinx_1_1_query_term.html#aecf6857f4d7d562e7fef098d415d6d9b">QueryTerm</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -549,7 +542,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 7 2012 13:01:39 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 8 2012 20:57:34 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

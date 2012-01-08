@@ -28,7 +28,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">FSphinx PHP
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.2</span>
    </div>
    
   </td>
@@ -110,27 +110,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#acb0a9f89730ecc36aa4d88471170cc28">__construct</a> ($status, $field, $term, array $user_sph_map=array())</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#ac9519cd4ac4b79c9eafb9db7327478cd">__construct</a> ($status, $field, $term, array $user_sph_map=array(), array $user_attr_map=array())</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a7516ca30af0db3cdbf9a7739b48ce91d">__toString</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a711a8053beb149d301d25d6d918cac83">ToHash</a> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a24ad5c55b8e94e5221e51b2b33494a82">ToSphinx</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#aecf6857f4d7d562e7fef098d415d6d9b">ToSphinx</a> ($exclude_numeric=false)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a7ad5717520c5c1707192793d6d5bc142">ToCanonical</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#acd9f59f8dd44e4324278049a50490f93">SetStatus</a> ($status)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#ab735f5a4ded9f9c9a5b04f182205fd7d">GetStatus</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#afc8f658686d2471176369f6a8c002069">GetUserField</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#ad82ba07df98ccbcd8230920fac58ccf5">GetSphinxField</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a177f844d0feed73afcacc83977cc90a0">GetAttribute</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a93fb5296b35e0dd9b5196a33bea7e5a6">GetTerm</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a5e0281b23ef80a55b4b0ef24c73b5057">SetUserTerm</a> ($term)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a375175a0e0eab8c9c82a06ab6de87d91">HasField</a> ($field)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#adf0aeb80475a94ffce1c09247a0d6114">FromMatchObject</a> (array $match, array $user_sph_map=array())</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a0618bd95d4f6ebd81c5d71b04b075a9f">FromString</a> ($str, array $user_sph_map=array())</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#ac644aa6184ed16f990155dbd1e2e4c56">FromMatchObject</a> (array $match, array $user_sph_map=array(), array $user_attr_map=array())</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a71ec645119874a9609de517c649b421a">FromString</a> ($str, array $user_sph_map=array(), array $user_attr_map=array())</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#ac0a1bd911dcaacfa603306f77203d965">cmp</a> (<a class="el" href="class_f_sphinx_1_1_query_term.html">QueryTerm</a> $a, <a class="el" href="class_f_sphinx_1_1_query_term.html">QueryTerm</a> $b)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a9a1472ba85c059f1d18ad94dabe12984">$_status</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a8b80c9c73508e798d61e772942c62291">$_term</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#ab0d815eb08c94ffdbbe1ae44e1e1eb02">$_user_term</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a8e6a5dff3c7d1c9cf8fff14338d10858">$_user_field</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a8b8eb2e80770ef7039a03b3e9e791e88">$_sph_field</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_query_term.html#a325560fdb47b44746cdb5ccaadac1699">$_attr_field</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A class that represents a single query term for a Sphinx query. </p>
@@ -138,12 +143,12 @@ Private Attributes</h2></td></tr>
 <dd>
 Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksikes@gmail.com">alex.ksikes@gmail.com</a>&gt; </dd></dl>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="acb0a9f89730ecc36aa4d88471170cc28"></a><!-- doxytag: member="FSphinx::QueryTerm::__construct" ref="acb0a9f89730ecc36aa4d88471170cc28" args="($status, $field, $term, array $user_sph_map=array())" -->
+<a class="anchor" id="ac9519cd4ac4b79c9eafb9db7327478cd"></a><!-- doxytag: member="FSphinx::QueryTerm::__construct" ref="ac9519cd4ac4b79c9eafb9db7327478cd" args="($status, $field, $term, array $user_sph_map=array(), array $user_attr_map=array())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_f_sphinx_1_1_query_term.html#acb0a9f89730ecc36aa4d88471170cc28">__construct</a> </td>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_query_term.html#ac9519cd4ac4b79c9eafb9db7327478cd">__construct</a> </td>
           <td>(</td>
           <td class="paramtype">$&#160;</td>
           <td class="paramname"><em>status</em>, </td>
@@ -164,7 +169,13 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">array $&#160;</td>
-          <td class="paramname"><em>user_sph_map</em> = <code>array&#160;()</code>&#160;</td>
+          <td class="paramname"><em>user_sph_map</em> = <code>array&#160;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array $&#160;</td>
+          <td class="paramname"><em>user_attr_map</em> = <code>array&#160;()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -174,7 +185,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
       </table>
 </div>
 <div class="memdoc">
-<p>Creates a single query term used internally by the <a class="el" href="class_f_sphinx_1_1_multi_field_query.html" title="A class that provides multi-field query object functionality for Sphinx.">MultiFieldQuery</a> object. A raw query term is of the form "@genre drama" where "genre" is the field to filter by and "drama" is the filtering term.</p>
+<p>Creates a single query term used internally by the <a class="el" href="class_f_sphinx_1_1_multi_field_query.html" title="A class that provides multi-field query object functionality for Sphinx.">MultiFieldQuery</a> object. A raw query term is of the form "@genre drama" where "genre" is the field to filter by and "drama" is the filtering term. Numerical terms may also be used if the FSphinx client is configured to filter by multi-valued attribute IDs.</p>
 <p>Query terms may be created from an FSphinx result array or a string representation.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -182,6 +193,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
     <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>Field to filter by. </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$term</td><td>Term to filter by. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$user_sph_map</td><td>Mapping between user fields and actual Sphinx fields. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$user_attr_map</td><td>Mapping between user fields and Sphinx multi-value attributes. </td></tr>
   </table>
   </dd>
 </dl>
@@ -243,12 +255,12 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 </div>
 </div>
-<a class="anchor" id="adf0aeb80475a94ffce1c09247a0d6114"></a><!-- doxytag: member="FSphinx::QueryTerm::FromMatchObject" ref="adf0aeb80475a94ffce1c09247a0d6114" args="(array $match, array $user_sph_map=array())" -->
+<a class="anchor" id="ac644aa6184ed16f990155dbd1e2e4c56"></a><!-- doxytag: member="FSphinx::QueryTerm::FromMatchObject" ref="ac644aa6184ed16f990155dbd1e2e4c56" args="(array $match, array $user_sph_map=array(), array $user_attr_map=array())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_f_sphinx_1_1_query_term.html#adf0aeb80475a94ffce1c09247a0d6114">FromMatchObject</a> </td>
+          <td class="memname">static <a class="el" href="class_f_sphinx_1_1_query_term.html#ac644aa6184ed16f990155dbd1e2e4c56">FromMatchObject</a> </td>
           <td>(</td>
           <td class="paramtype">array $&#160;</td>
           <td class="paramname"><em>match</em>, </td>
@@ -257,7 +269,13 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">array $&#160;</td>
-          <td class="paramname"><em>user_sph_map</em> = <code>array&#160;()</code>&#160;</td>
+          <td class="paramname"><em>user_sph_map</em> = <code>array&#160;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array $&#160;</td>
+          <td class="paramname"><em>user_attr_map</em> = <code>array&#160;()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -272,6 +290,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
   <table class="params">
     <tr><td class="paramtype">array</td><td class="paramname">$match</td><td>Result match to be parsed. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$user_sph_map</td><td>Mapping between user fields and actual Sphinx fields. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$user_attr_map</td><td>Mapping between user fields and Sphinx multi-value attributes. </td></tr>
   </table>
   </dd>
 </dl>
@@ -279,12 +298,12 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 </div>
 </div>
-<a class="anchor" id="a0618bd95d4f6ebd81c5d71b04b075a9f"></a><!-- doxytag: member="FSphinx::QueryTerm::FromString" ref="a0618bd95d4f6ebd81c5d71b04b075a9f" args="($str, array $user_sph_map=array())" -->
+<a class="anchor" id="a71ec645119874a9609de517c649b421a"></a><!-- doxytag: member="FSphinx::QueryTerm::FromString" ref="a71ec645119874a9609de517c649b421a" args="($str, array $user_sph_map=array(), array $user_attr_map=array())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_f_sphinx_1_1_query_term.html#a0618bd95d4f6ebd81c5d71b04b075a9f">FromString</a> </td>
+          <td class="memname">static <a class="el" href="class_f_sphinx_1_1_query_term.html#a71ec645119874a9609de517c649b421a">FromString</a> </td>
           <td>(</td>
           <td class="paramtype">$&#160;</td>
           <td class="paramname"><em>str</em>, </td>
@@ -293,7 +312,13 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">array $&#160;</td>
-          <td class="paramname"><em>user_sph_map</em> = <code>array&#160;()</code>&#160;</td>
+          <td class="paramname"><em>user_sph_map</em> = <code>array&#160;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array $&#160;</td>
+          <td class="paramname"><em>user_attr_map</em> = <code>array&#160;()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -308,10 +333,47 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$str</td><td>String to be parsed. </td></tr>
     <tr><td class="paramtype">array</td><td class="paramname">$user_sph_map</td><td>Mapping between user fields and actual Sphinx fields. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$user_attr_map</td><td>Mapping between user fields and Sphinx multi-value attributes. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>QueryTerm|null Parsed query term, or null if invalid. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a177f844d0feed73afcacc83977cc90a0"></a><!-- doxytag: member="FSphinx::QueryTerm::GetAttribute" ref="a177f844d0feed73afcacc83977cc90a0" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_query_term.html#a177f844d0feed73afcacc83977cc90a0">GetAttribute</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Return the Sphinx multi-value attribute name for the query term.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>string Sphinx multi-value attribute. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad82ba07df98ccbcd8230920fac58ccf5"></a><!-- doxytag: member="FSphinx::QueryTerm::GetSphinxField" ref="ad82ba07df98ccbcd8230920fac58ccf5" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_query_term.html#ad82ba07df98ccbcd8230920fac58ccf5">GetSphinxField</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Return the Sphinx field name of the query term.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>string Sphinx field name. </dd></dl>
 
 </div>
 </div>
@@ -418,6 +480,30 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 </div>
 </div>
+<a class="anchor" id="a5e0281b23ef80a55b4b0ef24c73b5057"></a><!-- doxytag: member="FSphinx::QueryTerm::SetUserTerm" ref="a5e0281b23ef80a55b4b0ef24c73b5057" args="($term)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_query_term.html#a5e0281b23ef80a55b4b0ef24c73b5057">SetUserTerm</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>term</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Set the user-facing query term value (usually matching a string to the corresponding ID).</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$term</td><td>User-facing query term value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a7ad5717520c5c1707192793d6d5bc142"></a><!-- doxytag: member="FSphinx::QueryTerm::ToCanonical" ref="a7ad5717520c5c1707192793d6d5bc142" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -454,25 +540,46 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 </div>
 </div>
-<a class="anchor" id="a24ad5c55b8e94e5221e51b2b33494a82"></a><!-- doxytag: member="FSphinx::QueryTerm::ToSphinx" ref="a24ad5c55b8e94e5221e51b2b33494a82" args="()" -->
+<a class="anchor" id="aecf6857f4d7d562e7fef098d415d6d9b"></a><!-- doxytag: member="FSphinx::QueryTerm::ToSphinx" ref="aecf6857f4d7d562e7fef098d415d6d9b" args="($exclude_numeric=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_f_sphinx_1_1_query_term.html#a24ad5c55b8e94e5221e51b2b33494a82">ToSphinx</a> </td>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_query_term.html#aecf6857f4d7d562e7fef098d415d6d9b">ToSphinx</a> </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>exclude_numeric</em> = <code>false</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <p>Return the query term string to be sent to Sphinx.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">boolean</td><td class="paramname">$exclude_numeric</td><td>If TRUE, returns only if non-numeric term. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>string Query term string for Sphinx. </dd></dl>
 
 </div>
 </div>
 <hr/><h2>Field Documentation</h2>
+<a class="anchor" id="a325560fdb47b44746cdb5ccaadac1699"></a><!-- doxytag: member="FSphinx::QueryTerm::$_attr_field" ref="a325560fdb47b44746cdb5ccaadac1699" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">array $_attr_field<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Mapping between user-facing query field and the multi-value Sphinx attribute. </p>
+
+</div>
+</div>
 <a class="anchor" id="a8b8eb2e80770ef7039a03b3e9e791e88"></a><!-- doxytag: member="FSphinx::QueryTerm::$_sph_field" ref="a8b8eb2e80770ef7039a03b3e9e791e88" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -483,7 +590,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
       </table>
 </div>
 <div class="memdoc">
-<p>Mapping between user-facing query fields and the actual Sphinx fields. </p>
+<p>Mapping between user-facing query field and the actual Sphinx field. </p>
 
 </div>
 </div>
@@ -529,6 +636,20 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 </div>
 </div>
+<a class="anchor" id="ab0d815eb08c94ffdbbe1ae44e1e1eb02"></a><!-- doxytag: member="FSphinx::QueryTerm::$_user_term" ref="ab0d815eb08c94ffdbbe1ae44e1e1eb02" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string $_user_term<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>User-facing query term value. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>FSphinxPHP/src/FSphinx/QueryTerm.php</li>
 </ul>
@@ -550,7 +671,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 7 2012 13:01:39 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 8 2012 20:57:34 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

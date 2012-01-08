@@ -28,7 +28,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">FSphinx PHP
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.2</span>
    </div>
    
   </td>
@@ -126,8 +126,11 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a3a67f54e990eeb68b146cb3f854eb653">Parse</a> ($query)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a3836ccadec5a15a23494dbe4329a8424">Query</a> ($query, $index=null, $comment='')</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a837abb7eaf77d8f51ab54d92c6727e33">AddQuery</a> ($query, $index=null, $comment=&quot;&quot;)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a222ca1e6b167bc22b1ce21289ded5c81">SetFilters</a> (<a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a> $query)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a0d53ee898449d69c44170701627d5b92">RunQueries</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a66134a69aecbe07f44be7e22cfd6685d">SetDefaultIndex</a> ($index)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ab601674e9313b2f2103bf13755f98fa6">SetFiltering</a> ($filtering)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ab5dcee4c34d71f9f0baacb66500e2353">GetQuery</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a51d7f296296ad825bc58dc334b1251ec">SaveOptions</a> (array $options)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#aa2e4703680bd1db02d2e26ce43406256">LoadOptions</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a0c6f8120086a56e98199d992c0fc147c">FetchTerms</a> (array $matches, array $options,\Closure $getter)</td></tr>
@@ -142,6 +145,7 @@ Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a8842031b990e0f8992463936843115bd">$_query_parser</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a311794dc25e917c21fcbba2e04e88af9">$_query</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a93fd95e583d2038a59769f297c4a264d">$_default_index</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ac3f11044b93eccb9635219bec05f7514">$_filtering</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ab0cd304a53a2640dc4f15e8d6100612f">$_options</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -208,7 +212,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 <p>Add a query to Sphinx, to be run as part of a batch.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$query</td><td>Sphinx query to be computed. </td></tr>
+    <tr><td class="paramtype"><a class="el" href="class_f_sphinx_1_1_multi_field_query.html" title="A class that provides multi-field query object functionality for Sphinx.">MultiFieldQuery</a>&#160;|&#160;string</td><td class="paramname">$query</td><td>Sphinx query to be computed. </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$index</td><td>(Optional) Limit Sphinx search to this index. </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$comment</td><td>(Optional) Comment associated with this query. </td></tr>
   </table>
@@ -333,6 +337,24 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>FSphinxClient|null Created FSphinx client, or null if unsuccessful. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab5dcee4c34d71f9f0baacb66500e2353"></a><!-- doxytag: member="FSphinx::FSphinxClient::GetQuery" ref="ab5dcee4c34d71f9f0baacb66500e2353" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ab5dcee4c34d71f9f0baacb66500e2353">GetQuery</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retrieve the query object.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd><a class="el" href="class_f_sphinx_1_1_multi_field_query.html" title="A class that provides multi-field query object functionality for Sphinx.">MultiFieldQuery</a> Query object. </dd></dl>
 
 </div>
 </div>
@@ -489,6 +511,54 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 </div>
 </div>
+<a class="anchor" id="ab601674e9313b2f2103bf13755f98fa6"></a><!-- doxytag: member="FSphinx::FSphinxClient::SetFiltering" ref="ab601674e9313b2f2103bf13755f98fa6" args="($filtering)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#ab601674e9313b2f2103bf13755f98fa6">SetFiltering</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>filtering</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Declare whether to use SetFilter on a numerical term instead of attribute string matching.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">boolean</td><td class="paramname">$filtering</td><td>If TRUE, filter by numerical query term. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a222ca1e6b167bc22b1ce21289ded5c81"></a><!-- doxytag: member="FSphinx::FSphinxClient::SetFilters" ref="a222ca1e6b167bc22b1ce21289ded5c81" args="(MultiFieldQuery $query)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_f_sphinx_client.html#a222ca1e6b167bc22b1ce21289ded5c81">SetFilters</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a> $&#160;</td>
+          <td class="paramname"><em>query</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Set <a class="el" href="class_f_sphinx_1_1_facet.html" title="A class for adding facet computation to Sphinx. Can be defined individually or as part of a FacetGrou...">Facet</a> attribute filters for a Sphinx query.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="class_f_sphinx_1_1_multi_field_query.html" title="A class that provides multi-field query object functionality for Sphinx.">MultiFieldQuery</a></td><td class="paramname">$query</td><td>Sphinx query to be computed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/><h2>Field Documentation</h2>
 <a class="anchor" id="a93fd95e583d2038a59769f297c4a264d"></a><!-- doxytag: member="FSphinx::FSphinxClient::$_default_index" ref="a93fd95e583d2038a59769f297c4a264d" args="" -->
 <div class="memitem">
@@ -501,6 +571,20 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 </div>
 <div class="memdoc">
 <p>(Optional) Limit Sphinx search to this index. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac3f11044b93eccb9635219bec05f7514"></a><!-- doxytag: member="FSphinx::FSphinxClient::$_filtering" ref="ac3f11044b93eccb9635219bec05f7514" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean $_filtering<code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>If TRUE, uses filtering by ID rather than attribute string matching. </p>
 
 </div>
 </div>
@@ -581,7 +665,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 7 2012 13:01:39 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 8 2012 20:57:34 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

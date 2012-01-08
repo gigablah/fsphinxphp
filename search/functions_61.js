@@ -1,6 +1,7 @@
 var searchData=
 [
   ['addquery',['AddQuery',['../class_f_sphinx_1_1_f_sphinx_client.html#a837abb7eaf77d8f51ab54d92c6727e33',1,'FSphinx::FSphinxClient']]],
+  ['attachcache',['AttachCache',['../class_f_sphinx_1_1_facet_group.html#a005fb799e49d7fea5c41d123358438dc',1,'FSphinx::FacetGroup']]],
   ['attachdatafetch',['AttachDataFetch',['../class_f_sphinx_1_1_facet.html#a8f6bac6e624e956a55924e0bd5404d0a',1,'FSphinx::Facet\AttachDataFetch()'],['../class_f_sphinx_1_1_facet_group.html#a221fca9a9e0a7ad2432c5df3bfe0ae5c',1,'FSphinx::FacetGroup\AttachDataFetch()']]],
   ['attachfacet',['AttachFacet',['../class_f_sphinx_1_1_facet_group.html#a44e104c29e3901eb842b7fa06c7e9762',1,'FSphinx::FacetGroup']]],
   ['attachfacets',['AttachFacets',['../class_f_sphinx_1_1_f_sphinx_client.html#a8a27b44516573529f35d7c90c456b9d5',1,'FSphinx::FSphinxClient']]],

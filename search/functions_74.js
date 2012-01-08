@@ -6,5 +6,5 @@ var searchData=
   ['toggleoff',['ToggleOff',['../class_f_sphinx_1_1_multi_field_query.html#ac9e29157a5faa3239db2fd1e592bfbdc',1,'FSphinx::MultiFieldQuery']]],
   ['toggleon',['ToggleOn',['../class_f_sphinx_1_1_multi_field_query.html#af0d0facf590454b399fca9bb1db1bbb0',1,'FSphinx::MultiFieldQuery']]],
   ['tohash',['ToHash',['../class_f_sphinx_1_1_query_term.html#a711a8053beb149d301d25d6d918cac83',1,'FSphinx::QueryTerm']]],
-  ['tosphinx',['ToSphinx',['../class_f_sphinx_1_1_multi_field_query.html#a24ad5c55b8e94e5221e51b2b33494a82',1,'FSphinx::MultiFieldQuery\ToSphinx()'],['../class_f_sphinx_1_1_query_term.html#a24ad5c55b8e94e5221e51b2b33494a82',1,'FSphinx::QueryTerm\ToSphinx()']]]
+  ['tosphinx',['ToSphinx',['../class_f_sphinx_1_1_multi_field_query.html#aecf6857f4d7d562e7fef098d415d6d9b',1,'FSphinx::MultiFieldQuery\ToSphinx()'],['../class_f_sphinx_1_1_query_term.html#aecf6857f4d7d562e7fef098d415d6d9b',1,'FSphinx::QueryTerm\ToSphinx()']]]
 ];
