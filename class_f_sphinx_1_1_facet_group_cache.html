@@ -28,7 +28,7 @@
   
   <td style="padding-left: 0.5em;">
    <div id="projectname">FSphinx PHP
-   &#160;<span id="projectnumber">1.0.2</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    
   </td>
@@ -98,32 +98,57 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Data Fields</a>  </div>
+<a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">FacetGroupCache Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="FSphinx::FacetGroupCache" -->
-<p>A class for storing computed <a class="el" href="class_f_sphinx_1_1_facet.html" title="A class for adding facet computation to Sphinx. Can be defined individually or as part of a FacetGrou...">Facet</a> values. Requires APC.  
+<p>A class for storing computed <a class="el" href="class_f_sphinx_1_1_facet.html" title="A class for adding facet computation to Sphinx. Can be defined individually or as part of a FacetGrou...">Facet</a> values.  
  <a href="class_f_sphinx_1_1_facet_group_cache.html#details">More...</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#a12cd0981a95bb2912dbb7d996dda878e">__construct</a> (<a class="el" href="interface_f_sphinx_1_1_data_cache_interface.html">DataCacheInterface</a> $cache)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#a80c02304a0baa86686cab234d0f7ef50">GetFacets</a> (<a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a> $query)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#a01d56c24ad96f7a9add612fdf0a27c77">SetFacets</a> (<a class="el" href="class_f_sphinx_1_1_multi_field_query.html">MultiFieldQuery</a> $query, array $facets, $replace=false, $sticky=false)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#a47645166e0a573e65fafc188aab8af8d">Clear</a> ($clear_sticky=false)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#ad36c1bd05dec80a71b711693d527737b">GetKey</a> ($string=null, $sticky=false, $regex=false)</td></tr>
-<tr><td colspan="2"><h2><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#af2cc58ddb59e01aa401dd45346db0a17">CACHE_STICKY</a> = '*'</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#ad3eede1a7511bcf331b4d72e9b5d5e58">CACHE_PREFIX</a> = '_FS_'</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#abe4ae64bd5290048844acf6490be95d1">GetKey</a> ($string=null)</td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_f_sphinx_1_1_data_cache_interface.html">DataCacheInterface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#ab4f662e43faabeabd8c89a097c5b3f40">$_cache</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>A class for storing computed <a class="el" href="class_f_sphinx_1_1_facet.html" title="A class for adding facet computation to Sphinx. Can be defined individually or as part of a FacetGrou...">Facet</a> values. Requires APC. </p>
+<div class="textblock"><p>A class for storing computed <a class="el" href="class_f_sphinx_1_1_facet.html" title="A class for adding facet computation to Sphinx. Can be defined individually or as part of a FacetGrou...">Facet</a> values. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Chris Heng &lt;<a href="mailto:hengkuanyen@gmail.com">hengkuanyen@gmail.com</a>&gt; </dd>
 <dd>
 Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksikes@gmail.com">alex.ksikes@gmail.com</a>&gt; </dd></dl>
-</div><hr/><h2>Member Function Documentation</h2>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a12cd0981a95bb2912dbb7d996dda878e"></a><!-- doxytag: member="FSphinx::FacetGroupCache::__construct" ref="a12cd0981a95bb2912dbb7d996dda878e" args="(DataCacheInterface $cache)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#a12cd0981a95bb2912dbb7d996dda878e">__construct</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_f_sphinx_1_1_data_cache_interface.html">DataCacheInterface</a> $&#160;</td>
+          <td class="paramname"><em>cache</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Create a cache to store computed <a class="el" href="class_f_sphinx_1_1_facet.html" title="A class for adding facet computation to Sphinx. Can be defined individually or as part of a FacetGrou...">Facet</a> values.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="interface_f_sphinx_1_1_data_cache_interface.html" title="Interface for datastores that allow storage and retrieval of facet values.">DataCacheInterface</a></td><td class="paramname">$cache</td><td>Datastore adapter object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a47645166e0a573e65fafc188aab8af8d"></a><!-- doxytag: member="FSphinx::FacetGroupCache::Clear" ref="a47645166e0a573e65fafc188aab8af8d" args="($clear_sticky=false)" -->
 <div class="memitem">
 <div class="memproto">
@@ -174,42 +199,24 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 </div>
 </div>
-<a class="anchor" id="ad36c1bd05dec80a71b711693d527737b"></a><!-- doxytag: member="FSphinx::FacetGroupCache::GetKey" ref="ad36c1bd05dec80a71b711693d527737b" args="($string=null, $sticky=false, $regex=false)" -->
+<a class="anchor" id="abe4ae64bd5290048844acf6490be95d1"></a><!-- doxytag: member="FSphinx::FacetGroupCache::GetKey" ref="abe4ae64bd5290048844acf6490be95d1" args="($string=null)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#ad36c1bd05dec80a71b711693d527737b">GetKey</a> </td>
+          <td class="memname"><a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#abe4ae64bd5290048844acf6490be95d1">GetKey</a> </td>
           <td>(</td>
           <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>string</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>string</em> = <code>null</code></td><td>)</td>
           <td></td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>sticky</em> = <code>false</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>regex</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Generate a cache key.</p>
+<p>Generate a cache key. If the candidate string is empty, generates the prefix instead.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$string</td><td>Candidate key. </td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$sticky</td><td>Whether to generate a sticky key. </td></tr>
-    <tr><td class="paramtype">boolean</td><td class="paramname">$regex</td><td>Whether to return the regex for the key prefix instead. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$string</td><td>Candidate string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -268,31 +275,17 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 </div>
 </div>
 <hr/><h2>Field Documentation</h2>
-<a class="anchor" id="ad3eede1a7511bcf331b4d72e9b5d5e58"></a><!-- doxytag: member="FSphinx::FacetGroupCache::CACHE_PREFIX" ref="ad3eede1a7511bcf331b4d72e9b5d5e58" args="" -->
+<a class="anchor" id="ab4f662e43faabeabd8c89a097c5b3f40"></a><!-- doxytag: member="FSphinx::FacetGroupCache::$_cache" ref="ab4f662e43faabeabd8c89a097c5b3f40" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#ad3eede1a7511bcf331b4d72e9b5d5e58">CACHE_PREFIX</a> = '_FS_'</td>
+          <td class="memname"><a class="el" href="interface_f_sphinx_1_1_data_cache_interface.html">DataCacheInterface</a> $_cache<code> [private]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Namespace prefix for FSphinx. </p>
-
-</div>
-</div>
-<a class="anchor" id="af2cc58ddb59e01aa401dd45346db0a17"></a><!-- doxytag: member="FSphinx::FacetGroupCache::CACHE_STICKY" ref="af2cc58ddb59e01aa401dd45346db0a17" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="class_f_sphinx_1_1_facet_group_cache.html#af2cc58ddb59e01aa401dd45346db0a17">CACHE_STICKY</a> = '*'</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Prefix for sticky cache keys. </p>
+<p>Datastore adapter object. </p>
 
 </div>
 </div>
@@ -317,7 +310,7 @@ Based on the fSphinx Python library by Alex Ksikes &lt;<a href="mailto:alex.ksik
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2012 20:57:34 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 15 2012 14:19:05 for FSphinx PHP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

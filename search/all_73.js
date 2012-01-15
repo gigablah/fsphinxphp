@@ -1,6 +1,7 @@
 var searchData=
 [
   ['saveoptions',['SaveOptions',['../class_f_sphinx_1_1_f_sphinx_client.html#a51d7f296296ad825bc58dc334b1251ec',1,'FSphinx::FSphinxClient']]],
+  ['set',['Set',['../class_f_sphinx_1_1_data_cache_a_p_c.html#a672e2e3162adfd886361c08d82bcc8d7',1,'FSphinx::DataCacheAPC\Set()'],['../interface_f_sphinx_1_1_data_cache_interface.html#a672e2e3162adfd886361c08d82bcc8d7',1,'FSphinx::DataCacheInterface\Set()'],['../class_f_sphinx_1_1_data_cache_memcached.html#a672e2e3162adfd886361c08d82bcc8d7',1,'FSphinx::DataCacheMemcached\Set()'],['../class_f_sphinx_1_1_data_cache_redis.html#a672e2e3162adfd886361c08d82bcc8d7',1,'FSphinx::DataCacheRedis\Set()']]],
   ['setaugment',['SetAugment',['../class_f_sphinx_1_1_facet.html#a0b099101f3d5c2bc1e0aaf6176ae3abc',1,'FSphinx::Facet']]],
   ['setcaching',['SetCaching',['../class_f_sphinx_1_1_facet_group.html#a82a517642234aa1b46c8d59452d26353',1,'FSphinx::FacetGroup']]],
   ['setcutoff',['SetCutOff',['../class_f_sphinx_1_1_facet.html#a973c30f853ba9684240e5218942817e7',1,'FSphinx::Facet']]],

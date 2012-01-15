@@ -1,9 +1,10 @@
 var searchData=
 [
+  ['get',['Get',['../class_f_sphinx_1_1_data_cache_a_p_c.html#a0ac4e8d3eae02fb3135096d61f7d08f3',1,'FSphinx::DataCacheAPC\Get()'],['../interface_f_sphinx_1_1_data_cache_interface.html#a0ac4e8d3eae02fb3135096d61f7d08f3',1,'FSphinx::DataCacheInterface\Get()'],['../class_f_sphinx_1_1_data_cache_memcached.html#a0ac4e8d3eae02fb3135096d61f7d08f3',1,'FSphinx::DataCacheMemcached\Get()'],['../class_f_sphinx_1_1_data_cache_redis.html#a0ac4e8d3eae02fb3135096d61f7d08f3',1,'FSphinx::DataCacheRedis\Get()']]],
   ['getattribute',['GetAttribute',['../class_f_sphinx_1_1_facet.html#a177f844d0feed73afcacc83977cc90a0',1,'FSphinx::Facet\GetAttribute()'],['../class_f_sphinx_1_1_query_term.html#a177f844d0feed73afcacc83977cc90a0',1,'FSphinx::QueryTerm\GetAttribute()']]],
   ['getfacets',['GetFacets',['../class_f_sphinx_1_1_facet_group_cache.html#a80c02304a0baa86686cab234d0f7ef50',1,'FSphinx::FacetGroupCache']]],
   ['getiterator',['getIterator',['../class_f_sphinx_1_1_facet.html#a7a9f937c2958e6f4dd7b030f86fb70b7',1,'FSphinx::Facet\getIterator()'],['../class_f_sphinx_1_1_facet_group.html#a7a9f937c2958e6f4dd7b030f86fb70b7',1,'FSphinx::FacetGroup\getIterator()'],['../class_f_sphinx_1_1_multi_field_query.html#a7a9f937c2958e6f4dd7b030f86fb70b7',1,'FSphinx::MultiFieldQuery\getIterator()']]],
-  ['getkey',['GetKey',['../class_f_sphinx_1_1_facet_group_cache.html#ad36c1bd05dec80a71b711693d527737b',1,'FSphinx::FacetGroupCache']]],
+  ['getkey',['GetKey',['../class_f_sphinx_1_1_facet_group_cache.html#abe4ae64bd5290048844acf6490be95d1',1,'FSphinx::FacetGroupCache']]],
   ['getname',['GetName',['../class_f_sphinx_1_1_facet.html#a682caeaf9d3a25116efd75d5f00fe3c3',1,'FSphinx::Facet']]],
   ['getparams',['GetParams',['../class_f_sphinx_1_1_facet.html#adb6a9586a7f9a7a11a4bfee1780dc937',1,'FSphinx::Facet']]],
   ['getquery',['GetQuery',['../class_f_sphinx_1_1_f_sphinx_client.html#ab5dcee4c34d71f9f0baacb66500e2353',1,'FSphinx::FSphinxClient']]],
