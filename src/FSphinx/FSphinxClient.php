@@ -127,6 +127,8 @@ class FSphinxClient extends \SphinxClient implements DataFetchInterface
 				$this->facets->Compute ( $query );
 			else
 				$this->facets->_Reset ();
+			
+			$results['facets'] = $this->facets->ToArray ();
 		}
 		
 		return $results;

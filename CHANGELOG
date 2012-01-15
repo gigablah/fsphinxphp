@@ -1,3 +1,8 @@
+## 2012-01-15 v1.0.3 ##
+
+* Refactored FacetGroupCache, added cache adapters for APC, Redis and Memcached
+* Results array returned from FSphinxClient now includes all facet values
+
 ## 2012-01-08 v1.0.2 ##
 
 * Bugfix: query terms quoted twice

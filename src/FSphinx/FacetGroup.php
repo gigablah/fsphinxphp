@@ -347,6 +347,21 @@ class FacetGroup implements \IteratorAggregate, \Countable
 	}
 	
 	/**
+	 * Return the FacetGroup representation in array format.
+	 * 
+	 * @return array FacetGroup array representation.
+	 */
+	public function ToArray ()
+	{
+		$facets = array ();
+		foreach ( $this->_facets as $facet )
+		{
+			$facets[$facet->getName ()] = $facet->ToArray ();
+		}
+		return $facets;
+	}
+	
+	/**
 	 * IteratorAggregate interface method. Makes the facet group iterable.
 	 * 
 	 * @return ArrayIterator Array iterator object.
