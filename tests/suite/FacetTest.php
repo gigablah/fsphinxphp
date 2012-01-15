@@ -5,6 +5,7 @@ use \FSphinx\MultiFieldQuery;
 use \FSphinx\Facet;
 use \FSphinx\FacetGroup;
 use \FSphinx\FacetGroupCache;
+use \FSphinx\DataCacheAPC;
 
 class FacetTest extends PHPUnit_Framework_TestCase
 {
@@ -21,7 +22,7 @@ class FacetTest extends PHPUnit_Framework_TestCase
 		$this->cl->SetDefaultIndex('items');
 		$this->cl->SetMatchMode(SPH_MATCH_EXTENDED2);
 		$this->cl->AttachQueryParser(new MultiFieldQuery(array('actor'=>'actors')));
-		$this->cache = new FacetGroupCache();
+		$this->cache = new FacetGroupCache(new DataCacheAPC());
 	}
 	
 	public function testCompute()

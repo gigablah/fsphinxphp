@@ -3,17 +3,26 @@
 namespace FSphinx;
 
 /**
- * @brief       A class for storing computed Facet values. Requires APC.
+ * @brief       A class for storing computed Facet values.
  * @author      Chris Heng <hengkuanyen@gmail.com>
  * @author      Based on the fSphinx Python library by Alex Ksikes <alex.ksikes@gmail.com>
  */
 class FacetGroupCache
-{
-	/** Prefix for sticky cache keys. */
-	const CACHE_STICKY = '*';
+{	
+	/**
+	 * @var DataCacheInterface Datastore adapter object.
+	 */
+	private $_cache;
 	
-	/** Namespace prefix for FSphinx. */
-	const CACHE_PREFIX = '_FS_';
+	/**
+	 * Create a cache to store computed Facet values.
+	 * 
+	 * @param DataCacheInterface $cache Datastore adapter object.
+	 */
+	public function __construct ( DataCacheInterface $cache )
+	{
+		$this->_cache = $cache;
+	}
 	
 	/**
 	 * Return the cached Facet values for a given Sphinx query.
@@ -23,16 +32,9 @@ class FacetGroupCache
 	 */
 	public function GetFacets ( MultiFieldQuery $query )
 	{
-		if ( !extension_loaded ('apc') || ini_get ('apc.enabled') != '1' )
-			return false;
-		
 		$key = $this->GetKey ( $query->ToCanonical () );
-		$sticky_key = $this->GetKey ( $query->ToCanonical (), true );
 		
-		// sticky keys take precedence
-		$result = apc_fetch ( $sticky_key );
-		if ( $result === false )
-			$result = apc_fetch ( $key );
+		$result = $this->_cache->Get ( $key );
 		if ( $result !== false )
 			$result = unserialize ( $result );
 		
@@ -52,10 +54,7 @@ class FacetGroupCache
 	 */
 	public function SetFacets ( MultiFieldQuery $query, array $facets, $replace=false, $sticky=false )
 	{
-		if ( !extension_loaded ('apc') || ini_get ('apc.enabled') != '1' )
-			return false;
-		
-		$key = $this->GetKey ( $query->ToCanonical (), $sticky );
+		$key = $this->GetKey ( $query->ToCanonical () );
 		$results = array ();
 		
 		foreach ( $facets as $facet )
@@ -63,10 +62,7 @@ class FacetGroupCache
 		
 		$results = serialize ( $results );
 		
-		if ( $replace )
-			return apc_store ( $key, $results );
-		else
-			return apc_add ( $key, $results );
+		return $this->_cache->Set ( $key, $results, $replace, $sticky );
 	}
 	
 	/**
@@ -77,40 +73,19 @@ class FacetGroupCache
 	 */
 	public function Clear ( $clear_sticky=false )
 	{
-		if ( !extension_loaded ('apc') || ini_get ('apc.enabled') != '1' )
-			return false;
-		
-		// only match keys in FSphinx namespace
-		$entries = new \APCIterator (
-			'user',
-			$this->GetKey ( null, $clear_sticky, true ),
-			APC_ITER_KEY
-		);
-		
-		// apc_delete accepts APCIterator
-		return apc_delete ( $entries );
+		$prefix = $this->GetKey ();
+		return $this->_cache->Clear ( $prefix, $clear_sticky );
 	}
 	
 	/**
-	 * Generate a cache key.
+	 * Generate a cache key. If the candidate string is empty, generates the prefix instead.
 	 * 
-	 * @param string $string Candidate key.
-	 * @param boolean $sticky Whether to generate a sticky key.
-	 * @param boolean $regex Whether to return the regex for the key prefix instead.
+	 * @param string $string Candidate string.
 	 * @return string Generated cache key.
 	 */
-	public function GetKey ( $string=null, $sticky=false, $regex=false )
+	public function GetKey ( $string=null )
 	{
 		// APPLICATION_ENV is prepended to separate test data
-		if ( $regex )
-		{
-			return '/^' . ( $sticky ? preg_quote(self::CACHE_STICKY) . '?' : '' ) . 
-				$_ENV['APPLICATION_ENV'] . self::CACHE_PREFIX . '/';
-		}
-		else
-		{
-			return ( $sticky ? self::CACHE_STICKY : '' ) . 
-				$_ENV['APPLICATION_ENV'] . self::CACHE_PREFIX . md5 ( $string );
-		}
+		return $_ENV['APPLICATION_ENV'] . ( $string ? md5 ( $string ) : '' );
 	}
 }

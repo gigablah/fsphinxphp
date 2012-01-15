@@ -4,6 +4,7 @@ use \FSphinx\FSphinxClient;
 use \FSphinx\MultiFieldQuery;
 use \FSphinx\Facet;
 use \FSphinx\FacetGroupCache;
+use \FSphinx\DataCacheAPC;
 
 class IntegrationTest extends PHPUnit_Framework_TestCase
 {
@@ -47,7 +48,7 @@ class IntegrationTest extends PHPUnit_Framework_TestCase
 				'keyword'=>'plot_keyword_attr'
 			)
 		));
-		$this->cache = new FacetGroupCache();
+		$this->cache = new FacetGroupCache(new DataCacheAPC());
 	}
 	
 	public function testFullQuery()

@@ -13,9 +13,6 @@
          syntaxCheck="false"
          bootstrap="bootstrap.php"
          strict="true">
-	<php>
-		<env name="APPLICATION_ENV" value="test"/>
-	</php>
 	<testsuites>
 		<testsuite name="FSphinxPHP Test Suite">
 			<file>suite/QueryTest.php</file>

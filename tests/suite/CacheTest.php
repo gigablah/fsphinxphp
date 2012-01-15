@@ -1,6 +1,9 @@
 <?php
 
 use \FSphinx\FacetGroupCache;
+use \FSphinx\DataCacheAPC;
+use \FSphinx\DataCacheRedis;
+use \FSphinx\DataCacheMemcached;
 
 class CacheTest extends PHPUnit_Framework_TestCase
 {
@@ -12,7 +15,15 @@ class CacheTest extends PHPUnit_Framework_TestCase
 	
 	protected function setUp()
 	{
-		$this->cache = new FacetGroupCache();
+		$redis = new Redis();
+		$redis->connect(REDIS_HOST, REDIS_PORT);
+		$memcache = new Memcache();
+		$memcache->connect(MEMCACHE_HOST, MEMCACHE_PORT);
+		$this->cache = array(
+			'apc' => new FacetGroupCache(new DataCacheAPC()),
+			'redis' => new FacetGroupCache(new DataCacheRedis($redis)),
+			'memcached' => new FacetGroupCache(new DataCacheMemcached($memcache))
+		);
 		$this->matches = array(
 			array(
 				'@expr' => 8900227,
@@ -52,7 +63,7 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		            ->will($this->returnValue('(@* drama)(@* drama)'));
 	}
 	
-	public function testKeyGeneration()
+	/*public function testKeyGeneration()
 	{
 		$hash = 'fsphinx';
 		
@@ -76,9 +87,9 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		$_ENV['APPLICATION_ENV'] = '';
 		$key = $this->cache->GetKey($hash, true);
 		$this->assertEquals('*_FS_779134b4a0491467801b4960d8e5683a', $key);
-	}
+	}*/
 	
-	public function testSetCache()
+	public function testSetCacheAPC()
 	{
 		if (!extension_loaded('apc') || ini_get('apc.enabled') != '1') {
 			$this->markTestSkipped('The APC extension is not loaded.');
@@ -87,8 +98,8 @@ class CacheTest extends PHPUnit_Framework_TestCase
 			$this->markTestSkipped('APC is not enabled on command line. Please set apc.enable_cli = 1');
 		}
 		
-		$this->cache->SetFacets($this->query, $this->facets, true, false);
-		$results = $this->cache->GetFacets($this->query);
+		$this->cache['apc']->SetFacets($this->query, $this->facets, true, false);
+		$results = $this->cache['apc']->GetFacets($this->query);
 		$match = array(
 			'time' => 0.001,
 			'total_found' => 2,
@@ -99,7 +110,7 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($results, array($match, $match));
 	}
 	
-	public function testClearCache()
+	public function testClearCacheAPC()
 	{
 		if (!extension_loaded('apc') || ini_get('apc.enabled') != '1') {
 			$this->markTestSkipped('The APC extension is not loaded.');
@@ -109,9 +120,9 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		}
 		
 		// sticky key
-		$this->cache->SetFacets($this->query, $this->facets, true, true);
-		$this->cache->Clear();
-		$results = $this->cache->GetFacets($this->query);
+		$this->cache['apc']->SetFacets($this->query, $this->facets, true, true);
+		$this->cache['apc']->Clear();
+		$results = $this->cache['apc']->GetFacets($this->query);
 		$match = array(
 			'time' => 0.001,
 			'total_found' => 2,
@@ -122,13 +133,106 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($results, array($match, $match));
 		
 		// clear sticky keys
-		$this->cache->Clear(true);
-		$results = $this->cache->GetFacets($this->query);
+		$this->cache['apc']->Clear(true);
+		$results = $this->cache['apc']->GetFacets($this->query);
+		$this->assertEquals($results, false);
+	}
+	
+	public function testSetCacheRedis()
+	{
+		if (!extension_loaded('redis')) {
+			$this->markTestSkipped('The Redis extension is not loaded.');
+        }
+		
+		$this->cache['redis']->SetFacets($this->query, $this->facets, true, false);
+		$results = $this->cache['redis']->GetFacets($this->query);
+		$match = array(
+			'time' => 0.001,
+			'total_found' => 2,
+			'error' => null,
+			'warning' => null,
+			'matches' => $this->matches
+		);
+		$this->assertEquals($results, array($match, $match));
+	}
+	
+	public function testClearCacheRedis()
+	{
+		if (!extension_loaded('redis')) {
+			$this->markTestSkipped('The Redis extension is not loaded.');
+        }
+		
+		// sticky key
+		$this->cache['redis']->SetFacets($this->query, $this->facets, true, true);
+		$this->cache['redis']->Clear();
+		$results = $this->cache['redis']->GetFacets($this->query);
+		$match = array(
+			'time' => 0.001,
+			'total_found' => 2,
+			'error' => null,
+			'warning' => null,
+			'matches' => $this->matches
+		);
+		$this->assertEquals($results, array($match, $match));
+		
+		// clear sticky keys
+		$this->cache['redis']->Clear(true);
+		$results = $this->cache['redis']->GetFacets($this->query);
+		$this->assertEquals($results, false);
+	}
+	
+	public function testSetCacheMemcached()
+	{
+		if (!extension_loaded('memcache')) {
+			$this->markTestSkipped('The Memcache extension is not loaded.');
+        }
+		
+		$this->cache['memcached']->SetFacets($this->query, $this->facets, true, false);
+		$results = $this->cache['memcached']->GetFacets($this->query);
+		$match = array(
+			'time' => 0.001,
+			'total_found' => 2,
+			'error' => null,
+			'warning' => null,
+			'matches' => $this->matches
+		);
+		$this->assertEquals($results, array($match, $match));
+	}
+	
+	public function testClearCacheMemcached()
+	{
+		if (!extension_loaded('memcache')) {
+			$this->markTestSkipped('The Memcache extension is not loaded.');
+        }
+		
+		// sticky key
+		$this->cache['memcached']->SetFacets($this->query, $this->facets, true, true);
+		$this->cache['memcached']->Clear();
+		$results = $this->cache['memcached']->GetFacets($this->query);
+		$match = array(
+			'time' => 0.001,
+			'total_found' => 2,
+			'error' => null,
+			'warning' => null,
+			'matches' => $this->matches
+		);
+		$this->assertEquals($results, array($match, $match));
+		
+		// clear sticky keys
+		$this->cache['memcached']->Clear(true);
+		$results = $this->cache['memcached']->GetFacets($this->query);
 		$this->assertEquals($results, false);
 	}
 	
 	protected function tearDown()
 	{
-		$this->cache->Clear(true);
+		if ( $this->cache['apc'] )
+			$this->cache['apc']->Clear(true);
+		
+		if ( $this->cache['redis'] )
+			$this->cache['redis']->Clear(true);
+		
+		if ( $this->cache['memcached'] )
+			$this->cache['memcached']->Clear(true);
 	}
 }
