@@ -3,7 +3,7 @@
 What's faceted search?
 ----------------------
 
-Think of "filtering", "refining" or "drilling down". For example, when searching through a database of movie titles, you could get a list of clickable refinement options such as actors, directors and year of release. As opposed to static hierarchical navigation, these options are calculated as you search so that you don't end up following paths that return zero results.
+Think of "filtering", "refining" or "drilling down". For example, when searching through a database of movie titles, you could get a list of clickable refinement options such as actors, directors, genre and year of release. As opposed to static hierarchical navigation, these options are calculated as you search so you don't end up following paths that return zero results.
 
 How do I use this?
 ------------------
@@ -18,6 +18,12 @@ How do I use this?
 	foreach ($results['facets'] as $facet) var_dump($facet);
 
 To learn more, please refer to the [tutorial] [2] or the [documentation] [3].
+
+Requirements
+------------
+
+* PHP 5.3+ (namespaces, anonymous functions)
+* Sphinx 1.10+ (string attributes)
 
 For questions and suggestions, please email Chris Heng (hengkuanyen at gmail dot com).
 

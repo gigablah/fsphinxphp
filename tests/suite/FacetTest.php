@@ -57,7 +57,7 @@ class FacetTest extends PHPUnit_Framework_TestCase
 			'term' => 'actor_term_attr',
 			'delim' => ',',
 			'query' => null
-			),$this->factor->GetSource()
+			), $this->factor->GetSource()
 		);
 		$results = $this->factor->Compute('drama');
 		if (!$results) $this->markTestSkipped('No results returned from Sphinx.');
