@@ -70,7 +70,7 @@ Now we can proceed to compute the facet:
 
     $results = $facet->Compute('drama');
 
-Note that when you're computing facets for a particular query, you're essentially performing the same query multiple times but grouping by a different facet attribute each time. All facet values have the following elements:
+Note that when you're computing facets for a particular query, you're essentially performing the same query repeatedly but grouping by a different facet attribute each time. (We'll address the performance considerations later in the tutorial). All facet values have the following elements:
 
 * @groupby: numerical ID of the facet value indexed by Sphinx
 * @term: defaults to the numerical ID, unless a data source is attached (see below)
@@ -93,7 +93,7 @@ By default, facets are grouped by ID and sorted by decreasing order of occurrenc
 
     $facet->SetGroupFunc('sum(user_rating_attr * nb_votes_attr)');
 
-You can pass in any Sphinx [expression] [4] wrapped by an aggregate function such as `avg`, `min`, `max` or `sum`. Let's additionally order the results by the value of the above expression:
+You can pass in any Sphinx [expression] [4] wrapped by an aggregate function such as `avg` `min` `max` or `sum`. Let's additionally order the results by the value of the above expression:
 
     $facet->SetOrderBy('@groupfunc', 'desc');
 
@@ -116,30 +116,135 @@ Now we get a different resultset with names instead of numbers.
 Multi-field queries
 -------------------
 
+A crucial aspect of faceted search is allowing the user to refine by the facet values shown. Each selected value is represented internally as a match against a specific index attribute in addition to the general query terms originally entered by the user.
+
+There are two ways of performing attribute matching with Sphinx. First is extended query syntax using the `@` field search operator. To search for movies containing "drama" in any field, "Harrison Ford" in actors and "1974" in year of release, the query would look like:
+
+    $sphinx->Query('(@* drama) (@actors "Harrison Ford") (@year 1974)');
+
+Another way is to explicitly filter by attribute ID. The above query would be written as:
+
+    $sphinx->SetFilter('actor_attr', array(148)); // ID for "Harrison Ford"
+    $sphinx->SetFilter('year_attr', array(1974));
+    $sphinx->Query('drama');
+
+The advantage of using the first method is that users get the option to build their own faceted queries without having to know the ID values for each term. However, the second method eliminates any ambiguity especially if multiple terms share the same value (there may be different actors with the same name). FSphinx supports both methods seamlessly through the use of a multi-field query object which parses query strings into individual terms.
+
+The following code creates a query object that maps a user search against `actor` or `genre` to a Sphinx search matching against the (text) fields `actors` or `genres` respectively:
+
+    $query = new MultiFieldQuery(array('actor' => 'actors', 'genre' => 'genres'));
+
+Let's parse a query string:
+
+    $query->Parse('@year 1974 @genre drama @actor harrison ford');
+
+The query object does a pattern match and separates `year`, `genre` and `actor` into individual query terms. Printing the query displays the user representation:
+
+    echo $query;                     // (@year 1974) (@genre drama) (@actor harrison ford)
+
+There's also the Sphinx query representation, which uses the mappings we defined earlier. Note that values with spaces are automatically wrapped with double quotes:
+
+    echo $query->ToSphinx();         // (@year 1974) (@genres drama) (@actors "harrison ford")
+
+A user may wish to quickly toggle individual query terms on and off. This can be easily done:
+
+    $query->ToggleOff('@year 1974'); // will be removed from the Sphinx representation
+    echo $query;                     // (@-year 1974) (@genre drama) (@actor harrison ford)
+    echo $query->ToSphinx();         // (@genres drama) (@actors "harrison ford")
+
+To check if a query term is present in a query object:
+
+    assert($query->HasQueryTerm('@year 1974'));
+
+For caching purposes, a unique or canonical representation is built by ordering the query terms in alphabetical order:
+
+    echo $query->ToCanonical();      // (@actors "harrison ford") (@genres drama) (@year 1974)
+
+Finally, we can pass a query object into a facet computation just like a regular query string. Note that the Sphinx client must be set to extended match mode:
+
+    $fsphinx->SetMatchMode(SPH_MATCH_EXTENDED);
+    $facet->Compute($query);
+    echo $facet;
+    
+    actor: (5/25 values group sorted by "@groupfunc desc" in 0.001 sec.)
+        1. Frederic Forrest, @count=2, @groupby=2078, @groupfunc=161016.6875, @selected=False
+        2. Harrison Ford, @count=2, @groupby=148, @groupfunc=161016.6875, @selected=True
+        3. James Keane, @count=1, @groupby=443856, @groupfunc=137119.265625, @selected=False
+        4. Kerry Rossall, @count=1, @groupby=743953, @groupfunc=137119.265625, @selected=False
+        5. Jerry Ziesmer, @count=1, @groupby=956310, @groupfunc=137119.265625, @selected=False
+        6. G.D. Spradlin, @count=1, @groupby=819525, @groupfunc=137119.265625, @selected=False
+
+We can see that the "Harrison Ford" term has been properly marked as selected.
+
+By default, computations are done using string field matching. To switch to ID filtering mode:
+
+    $fsphinx->SetFiltering(true);
+    $query->Parse('@actor 148 @genre 8'); // IDs for "Harrison Ford" and "Drama" respectively
+    $results = $facet->Compute($query);
+
+The facet values returned are the same as before.
+
 Performance, caching and facet groups
 -------------------------------------
+
+Most of the time we'd want to refine searches by multiple facets. However, sending the same query to Sphinx with different grouping parameters for each facet would be rather inefficient. Luckily, Sphinx provides pretty good multi-query optimization via the use of batched queries. Furthermore, we'd like to avoid calls to Sphinx altogether by making sure that the facet computations are cached whenever possible.
+
+Let's start with facets for `year` and `actor`:
+
+    $facet_year = new Facet('year');
+    $facet_actor = new Facet('actor');
+    
+Now we introduce the `FacetGroup`, which builds batch queries encompassing all of its individual members:
+
+    $facets = new FacetGroup($facet_year, $facet_actor);
+    $facets->AttachSphinxClient($fsphinx);
+    $results = $facets->Compute('drama', false); // second parameter explicitly turns caching on or off
+
+If we were to print this group of facets, we'd get the same results as if each facet had been computed independently. Note that each component facet can be set up differently, say we'd like to group sort by count on `year` but by popularity on `actor`.
+
+Since facet computation can be expensive, we'd like to make sure that we don't perform the same computation more than once. Let's enable caching by attaching a `FacetGroupCache` with an adapter of choice:
+
+    $cache = new FacetGroupCache(new DataCacheAPC()); // Memcache and Redis also supported
+    $facets->AttachCache($cache);
+    $facets->SetCaching(true);
+
+Computation results are now retrieved from the cache whenever possible:
+
+    $facets->Compute('drama');
+    $facets->Compute('drama');
+    assert($facets->GetTime() == -1); // -1 indicates a cache hit
+    $results = $facets->Compute('drama', false); // force computation
+    assert($facets->GetTime() >= 0);
+
+We can also opt to preload the facet results beforehand:
+
+    $facets->SetPreloading(true);
+    $facets->SetCaching(false);
+    $facets->Preload('drama');
+    $results = $facets->Compute('drama');
+    assert($facets->GetTime() == -1);
 
 Putting everything together
 ---------------------------
 
 FSphinx extends the Sphinx API, so you can use `FSphinxClient` in place of a normal `SphinxClient`.
 
-Creating the client:
+Create the client:
 
     $fsphinx = new FSphinxClient();
     $fsphinx->SetServer('127.0.0.1', 9312); // configure it like you would a normal Sphinx client
     $fsphinx->SetDefaultIndex('items'); // now you don't have to specify the index for each query
 
-Attach the facets from before:
+Attach the facets from before (this creates a `FacetGroup` internally):
 
-    $fsphinx->AttachFacets($fyear, $fgenre);
+    $fsphinx->AttachFacets($facet_year, $facet_actor);
 
 And finally we run the query:
 
     $results = $fsphinx->Query('movie');
     $results = $fsphinx->Query($query); // it also accepts a MultiFieldQuery object
 
-The `$results` array now contains a `facets` entry, which holds the attributes and computed values for each attached facet.
+The results array now contains a `facets` entry, which holds the attributes and computed values for each attached facet.
 
 Loading configuration files
 ---------------------------
