@@ -1,7 +1,11 @@
 <?php
 
-require(dirname(__DIR__) . '/lib/sphinxapi.php');
-require(dirname(__DIR__) . '/src/fsphinxapi.php');
+if (!is_file($autoloader = dirname(__DIR__) . '/vendor/autoload.php')) {
+    throw new \RuntimeException('Run "composer install --dev" to create the autoloader.');
+}
+
+$loader = require $autoloader;
+$loader->add('FSphinx\\Tests', __DIR__);
 
 // Sphinx connection parameters
 define('SPHINX_HOST', '127.0.0.1');

@@ -1,17 +1,17 @@
 <?php
+
 /** Simple autoloader */
 
 namespace FSphinx;
 
-function Autoload ( $class )
+function autoload($class)
 {
-	$file = dirname(__FILE__) . DIRECTORY_SEPARATOR . str_replace ( '\\', DIRECTORY_SEPARATOR, $class ) . '.php';
-	if ( @file_exists ( $file ) )
-	{
-		require ( $file );
-		return true;
-	}
-	return false;
+    $file = dirname(__FILE__) . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+    if (file_exists($file)) {
+        require($file);
+        return true;
+    }
+    return false;
 }
 
-spl_autoload_register('\FSphinx\Autoload');
+spl_autoload_register('\\FSphinx\\autoload');

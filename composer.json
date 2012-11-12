@@ -1,0 +1,27 @@
+{
+    "name": "gigablah/fsphinxphp",
+    "type": "library",
+    "description": "Facet extension for Sphinx Search",
+    "keywords": ["sphinx","search","api","facet"],
+    "homepage": "https://github.com/gigablah/fsphinxphp",
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "Chris Heng",
+            "email": "hengkuanyen@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {
+        "php": ">=5.3.0",
+        "gigablah/sphinxphp": "2.0.6-alpha"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "FSphinx": "src"
+        }
+    }
+}
