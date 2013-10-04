@@ -11,7 +11,6 @@ How do I use this?
 You can incorporate it into your project using [Composer] [2]. Create a `composer.json` file and run `composer install`:
 
     {
-        "minimum-stability": "alpha",
         "require": {
             "gigablah/fsphinxphp": "1.1.*"
         }
