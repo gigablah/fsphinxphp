@@ -88,7 +88,22 @@ class FSphinxClient extends SphinxClient implements DataSourceInterface
         $this->facets = new FacetGroup($facets);
         $this->facets->attachSphinxClient($this);
     }
-
+    
+    /**
+     * Attach a Facet to the collection for computation
+     * The Facet is added to FacetGroup for better performance.
+     *
+     * @param Facet $facet Facet object to add
+     */
+    public function attachFacet($facet)
+    {
+        if(empty($this->facets)) {
+            $this->attachFacets($facet);
+        } else {
+            $this->facets->attachFacet($facet);
+        }
+    }
+    
     /**
      * Parse a query string and convert it into a MultiFieldQuery object.
      *
