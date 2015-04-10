@@ -186,6 +186,18 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
             $options['attr'] :
             $this->_name . '_attr';
 
+        //faceted query over a range of values
+        if(isset($options['intervals'])) { 
+            //if interval query
+            //set INTERVAL select clause with count
+            $this->_set_select = 'INTERVAL(' . $this->_attr . ',' . implode(',', $options['intervals']) . ') as ' . $this->_attr . '_range, @count';
+            //update _attr for group by clause
+            $this->_attr .= '_range';
+        } else {
+            //else set default select clause
+            $this->_set_select = '@groupby, @count';
+        }
+
         $this->_func = isset($options['func']) ?
             $options['func'] :
             FSphinxClient::SPH_GROUPBY_ATTR;
@@ -195,8 +207,8 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
             '@count desc';
 
         $this->_set_select = isset($options['set_select']) ?
-            '@groupby, @count, ' . $options['set_select'] :
-            '@groupby, @count';
+            $this->_set_select . ', ' . $options['set_select'] :
+            $this->_set_select;
 
         $this->_sph_field = isset($options['sph_field']) ?
             $options['sph_field'] :
