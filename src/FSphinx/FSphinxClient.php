@@ -142,7 +142,7 @@ class FSphinxClient extends SphinxClient implements DataSourceInterface
 
         // compute all facets if there are results found
         if ($this->facets) {
-            if (is_array($results) && $results['total_found']) {
+            if (is_array($results) && isset($results['total_found']) && $results['total_found']) {
                 $this->facets->compute($query);
             } else {
                 $this->facets->reset();
