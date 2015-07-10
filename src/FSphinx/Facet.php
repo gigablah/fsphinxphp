@@ -461,7 +461,7 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
         }
 
         $max_num_values = $this->_max_num_values;
-        if ($this->_augment) {
+        if ($this->_augment && is_object($query)) {
             $max_num_values += $query->countField($this->_sph_field);
         }
 
@@ -502,11 +502,11 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
     /**
      * Used internally to set the computed Facet results, metadata and terms.
      *
-     * @param MultiFieldQuery $query Sphinx query as a MultiFieldQuery object.
+     * @param MultiFieldQuery|string $query Sphinx query as a MultiFieldQuery object or string
      * @param array $results Computed results from Sphinx.
      * @param DataSourceInterface $datasource Data source object.
      */
-    public function setValues(MultiFieldQuery $query, array $results, DataSourceInterface $datasource = null)
+    public function setValues($query, array $results, DataSourceInterface $datasource = null)
     {
         foreach (array_keys($this->_results) as $key) {
             if ($key != 'matches' && array_key_exists($key, $results)) {
@@ -554,14 +554,18 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
             $value['@groupfunc'] = isset($value['@groupfunc']) ? $value['@groupfunc'] : $value['@count'];
             $term = sprintf('@%s %s', $this->_sph_field, strtolower($value['@term']));
             $id = sprintf('@%s %s', $this->_sph_field, strtolower($value['@groupby']));
-            $value['@selected'] = $query->hasQueryTerm($term) || $query->hasQueryTerm($id) ? 'True' : 'False';
+            if(is_object($query)) {
+                $value['@selected'] = $query->hasQueryTerm($term) || $query->hasQueryTerm($id) ? 'True' : 'False';
+            }
             $this->_results['matches'][] = $value;
         }
 
         // supply the query object with matched terms as well
-        foreach ($query as $qt) {
-            if ($qt->hasField($this->_sph_field) && isset($terms[$qt->getTerm()])) {
-                $qt->setUserTerm($terms[$qt->getTerm()]);
+         if(is_object($query)) {
+            foreach ($query as $qt) {
+                if ($qt->hasField($this->_sph_field) && isset($terms[$qt->getTerm()])) {
+                    $qt->setUserTerm($terms[$qt->getTerm()]);
+                }
             }
         }
     }

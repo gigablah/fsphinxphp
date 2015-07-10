@@ -231,13 +231,13 @@ class FacetGroup implements \IteratorAggregate, \Countable
     /**
      * Used internally to set the computed results, metadata and terms for all Facets.
      *
-     * @param MultiFieldQuery $query Sphinx query as a MultiFieldQuery object.
+     * @param MultiFieldQuery|string $query Sphinx query as a MultiFieldQuery object or string.
      * @param array $results Computed results from Sphinx.
      * @param DataSourceInterface $datasource Data source object.
      * @see Facet::_SetValues()
      * @see Facet::_OrderValues()
      */
-    protected function setValues(MultiFieldQuery $query, array $results, DataSourceInterface $datasource = null)
+    protected function setValues($query, array $results, DataSourceInterface $datasource = null)
     {
         foreach ($this->_facets as $index => $facet) {
             $result = $results[$index];
